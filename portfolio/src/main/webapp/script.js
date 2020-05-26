@@ -13,21 +13,20 @@
 // limitations under the License.
 
 /**
- * Adds a random greeting to the page.
+ * Adds a random quote to the page.
  */
 function addRandomQuote() {
-  const officeQuotes =
-          [
-        '“Would I rather be feared or loved? Easy. Both. I want people to be afraid of how much they love me.” – Michael Scott',
-       '“I’m not superstitious, but I am a little stitious.” – Michael Scott',
-        '“And I knew exactly what to do. But in a much more real sense, I had no idea what to do.” – Michael Scott',
-         '"You miss 100% of the shots you dont take. - Wayne Gretsky" - Michael Scott'
-         ];
+  const officeQuotes = [
+      '“Would I rather be feared or loved? Easy. Both. I want people to be afraid of how much they love me.” – Michael Scott',
+      '“I’m not superstitious, but I am a little stitious.” – Michael Scott',
+      '“And I knew exactly what to do. But in a much more real sense, I had no idea what to do.” – Michael Scott',
+      '"You miss 100% of the shots you dont take. - Wayne Gretsky" - Michael Scott',
+    ];
 
-  // Pick a random greeting.
+  // Pick a random quote.
   const quote = officeQuotes[Math.floor(Math.random() * officeQuotes.length)];
 
-  // Add it to the page.
+  // Add quote to the page.
   const quoteContainer = document.getElementById('quote-container');
   quoteContainer.innerText = quote;
 }
