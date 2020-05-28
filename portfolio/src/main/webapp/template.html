@@ -143,13 +143,46 @@
                 <section class="interests section">
                     <div class="section-inner shadow-sm rounded">
                         <h2 class="heading">Other Interests</h2>
-                        <!-- TODO: add in VR polytope with interests on each side using A-Frame -->
+                        <!--TODO: figure out why script doesn't work if I put it at bottom -->
+                        <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+                        <script src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>
                         <div id="myEmbeddedScene">
                             <a-scene background="color: #ECECEC" embedded>
-                                <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9" shadow></a-box>
-                                <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E" shadow></a-sphere>
-                                <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D" shadow></a-cylinder>
-                                <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4" shadow></a-plane>
+                                <!-- extra shapes -->
+                                <a-box position="-4 0.5 -3" rotation="0 45 0" color="#4CC3D9" shadow></a-box>
+                                <a-cylinder position="4 0.75 -3" radius="0.5" height="1.5" color="#FFC65D" shadow></a-cylinder>
+
+                                <!--   pillars -->
+                                <a-cylinder position="-1.25 1 -3" rotation="0 0 0" radius="0.1" height="2" color="magenta"></a-cylinder>
+                                <a-cylinder position="1.25 1 -3" radius="0.1" height="2" color="magenta"></a-cylinder>
+
+                                <!--   banner -->
+                                <a-box color="tomato" position="0 1.7 -3" rotation="0 0 0" depth="0.1" height="0.5" width="2.5"></a-box>
+                                <a-text value="Jack's Interests!" position="-1.1 1.7 -2.9" width="6.5" color="black"></a-text>
+                                
+                                <!-- Clouds -->
+                                <a-entity rotation="0 0 0" animation="property: object3D.position.x; to: 35; delay: 200; dur: 50000; easing: linear; loop: true">
+                                    <a-box  position="-20 5 -10"  color="white" opacity="0.8" width="4" depth="2" height="0.75" material="" geometry=""></a-box>
+                                    <a-text position="-20 4.85 -8.5" value="Podcasts" width="8" color="black" align="center"></a-text>
+                                </a-entity>
+                                
+                                <a-entity rotation="0 0 0" animation="property: object3D.position.x; to: 40; delay: 400; dur: 50000; easing: linear; loop: true">
+                                    <a-box  position="-20 2 -12"  color="white" opacity="0.8" width="4" depth="2" height="0.75" material="" geometry=""></a-box>
+                                    <a-text position="-20 1.85 -10.5" value="Periodic Table" width="8" color="black" align="center"></a-text>
+                                </a-entity>
+                                
+                                <a-entity rotation="0 0 0" animation="property: object3D.position.x; to: 40; delay: 600; dur: 50000; easing: linear; loop: true">
+                                    <a-box  position="-20 8 -12"  color="white" opacity="0.8" width="4" depth="2" height="0.75" material="" geometry=""></a-box>
+                                    <a-text position="-20 7.85 -10.5" value="Frisbee" width="8" color="black" align="center"></a-text>
+                                </a-entity>
+                                
+                                <a-entity rotation="0 0 0" animation="property: object3D.position.x; to: 40; delay: 25000; dur: 50000; easing: linear; loop: true">
+                                    <a-box  position="-20 3 -10"  color="white" opacity="0.8" width="4" depth="2" height="0.75" material="" geometry=""></a-box>
+                                    <a-text position="-20 2.85 -8.5" value="3D Printing" width="8" color="black" align="center"></a-text>
+                                </a-entity>
+                                                 
+                                <!-- Environment-->
+                                <a-entity environment="preset: forest; groundColor: #445; grid: cross; lightPosition: 0 4 3;"></a-entity>
                             </a-scene>
                         </div><!--//myEmbeddedScene-->                        
                     </div><!--//secton-inner-->
@@ -289,7 +322,6 @@
     <script type="text/javascript" src="assets/plugins/github-activity/github-activity-0.1.5.min.js"></script>
     <!-- custom js -->
     <script type="text/javascript" src="assets/js/main.js"></script>            
-    <!--A-Frame VR -->
-    <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+
 </body>
 </html> 
