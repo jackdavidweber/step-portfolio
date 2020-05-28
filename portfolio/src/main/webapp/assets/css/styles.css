@@ -672,3 +672,9 @@ a.dotted-link:hover {
     max-width: inherit;
   }
 }
+
+/* VR with A-Frame */
+#myEmbeddedScene {
+    width:100%;
+    height:500px;
+}
