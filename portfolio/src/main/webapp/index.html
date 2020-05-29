@@ -1,20 +1,516 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>My Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-    <script type="text/javascript" src="script.js"></script>
-  </head>
-  <body>
-    <div id="content">
-      <h1>Jack's Main Portfolio</h1>
-      <img src="images/headshot.jpg" style="width:128px;height:128px;" alt="profile image"/>
-      <p>This is my portfolio. </p>
-      <p>Click <a href="template.html">here</a> to see my portfolio, built with a template and bootstrap</p>
-      <p>Click here to get a random message:</p>
-      <button onclick="addRandomQuote()">Office Quote</button>
-      <div id="quote-container"></div>
-    </div>
-  </body>
-</html>
+<html lang="en">
+<head>
+    <title>Jack Portfolio</title>
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bootstrap 4 Portfolio/Resume Theme for Developers">
+    <meta name="author" content="Xiaoying Riley at 3rd Wave Media">    
+    <link rel="shortcut icon" href="favicon.ico">  
+    
+    <link href='https://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'> 
+    
+    <!-- FontAwesome JS -->
+    <script defer src="assets/fontawesome/js/all.js"></script>
+    
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">   
+    
+    <!-- github activity css -->    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/octicons/2.0.2/octicons.min.css">
+    <link rel="stylesheet" href="assets/plugins/github-activity/github-activity-0.1.5.min.css">
+    
+    <!-- Theme CSS -->  
+    <link id="theme-style" rel="stylesheet" href="assets/css/styles.css">
+    
+    <!-- AFrame -->
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>
+</head> 
+
+<body>
+    <!-- ******HEADER****** --> 
+    <header class="header">
+        <div class="container clearfix">                       
+            <img
+                class="profile-image img-fluid float-left rounded-circle" 
+                style="width:200px;height:200px;" src="assets/images/headshot.jpg" 
+                alt="profile image" />
+            <div class="profile-content float-left">
+                <h1 class="name">Jack Weber</h1>
+                <h2 class="desc">Google Step Intern</h2>   
+                <ul class="social list-inline">
+                    <li class="list-inline-item">
+                        <a href="https://www.linkedin.com/in/jackdavidweber">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="https://github.com/jackdavidweber">
+                            <i class="fab fa-github-alt"></i>
+                        </a>
+                    </li>    
+                </ul> 
+            </div><!--//profile-->
+            <a class="btn btn-cta-primary float-right" href="mailto:jackweber@google.com" target="_blank">
+                <i class="fas fa-paper-plane"></i>
+                 Contact Me
+            </a>              
+        </div><!--//container-->
+    </header><!--//header-->
+
+    <div class="container sections-wrapper">
+        <div class="row">
+            <div class="primary col-lg-8 col-12">
+                <section class="about section">
+                    <div class="section-inner shadow-sm rounded">
+                        <h2 class="heading">About Me</h2>
+                        <div class="content">
+                            <p>
+                                I am a sophmore at Pomona College studying Computer Science! Outside my major, I love learning about 
+                                political philosophy (Plato, Hobbes, Locke) and genetics (ethics, CRISPR, big data genomics). I am on
+                                the Claremont Colleges Ultimate Frisbee team and I like to climb both rocks and 
+                                <a href="https://treeclimbing.coe.cornell.edu/" target="_blank"> trees</a> in my spare time!
+                            </p>
+                        </div><!--//content-->
+                    </div><!--//section-inner-->                 
+                </section><!--//section-->
+    
+               <section class="latest section">
+                    <div class="section-inner shadow-sm rounded">
+                        <h2 class="heading">Latest Projects</h2>
+                        <!--TODO: add in microcontroller engineering project -->
+                        <div class="content">    
+                            <div class="item featured text-center">
+                                <div class="featured-image has-ribbon">
+                                    <a href="#" target="_blank">
+                                    <img    
+                                        class="img-fluid project-image rounded shadow-sm" 
+                                        src="assets/images/projects/GradTracks.png" 
+                                        alt="GradTracks" />
+                                    </a>
+                                    <div class="ribbon">
+                                        <div class="text">New</div>
+                                    </div>
+                                </div>
+                                <h3 class="title mb-3">
+                                    <a href="#" target="_blank">GradTracks - The best way to visualize alumni paths and outcomes</a>
+                                </h3>                                    
+                                <div class="desc text-left">                                    
+                                    <p>
+                                        Lead developer for databases class group project. GradTracks is a tool that allows students to 
+                                        see what previous alumni have done after graduating. Built database, backend and frontend that 
+                                        quickly processed queries and displayed data visualizations.
+                                    </p>
+                                </div><!--//desc-->         
+                            </div><!--//item-->
+
+                            <hr class="divider" />
+                            <div class="item row">
+                                <a class="col-md-4 col-12" href="https://collegespreadsheets.herokuapp.com" target="_blank">
+                                    <img 
+                                        class="img-fluid project-image rounded shadow-sm" 
+                                        src="assets/images/projects/collegeSpreadsheets.png" 
+                                        alt="College Spreadsheet" />
+                                </a>
+                                <div class="desc col-md-8 col-12">
+                                    <h3 class="title">
+                                        <a href="https://collegespreadsheets.herokuapp.com" target="_blank">College Spreadsheets- A data driven approach to finding the right college</a>
+                                    </h3>
+                                    <p class="mb-2">React.js web app for high school students that generates personalized recommendations 
+                                        based on inputted preferences. Pulled data from U.S. Dept of Education's API into a Flask-RESTful 
+                                        backend that uses python and pandas to filter, clean and email spreadsheets to students.
+                                    </p>
+                                    <p>
+                                        <a class="more-link" href="https://collegespreadsheets.herokuapp.com" target="_blank">
+                                            <i class="fas fa-external-link-alt"></i>
+                                            Find out more
+                                        </a>
+                                    </p>
+                                </div><!--//desc-->                          
+                            </div><!--//item-->
+                            
+                            <div class="item row">
+                                <a class="col-md-4 col-12" href="#" target="_blank">
+                                    <img 
+                                        class="img-fluid project-image rounded shadow-sm" 
+                                        src="assets/images/projects/microcontroller.jpg" 
+                                        alt="Microcontroller" />
+                                </a>
+                                <div class="desc col-md-8 col-12">
+                                    <h3 class="title">
+                                        <a href="#" target="_blank">Multicycle Processor</a>
+                                    </h3>
+                                    <p class="mb-2">
+                                        For the final project of Digital Electronics and Computer Engineering at Harvey Mudd, I 
+                                        built a multicycle RISC-V processor on an FPGA. Involved multiple finite state machines and 
+                                        understanding of microcontroller design from logic gates to the ARM instruction set.  
+                                    </p>
+                                </div><!--//desc-->                          
+                            </div><!--//item-->
+
+                            <div class="item row">
+                                <a class="col-md-4 col-12" href="#" target="_blank">
+                                    <img 
+                                        class="img-fluid project-image rounded shadow-sm" 
+                                        src="assets/images/projects/oculus.jpg" 
+                                        alt="Virtual Reality" />
+                                </a>
+                                <div class="desc col-md-8 col-12">
+                                    <h3 class="title">
+                                        <a href="#" target="_blank">VRLab - Virtual Reality Model of Pomona College Makerspace Lab</a>
+                                    </h3>
+                                    <p class="mb-2">
+                                        Built a model of Pomona College's new makerspace in virtual reality. Users could move around 
+                                        the lab, watch 360 degree videos, try out the 3D printer, and even play a custom beat saber game. 
+                                    </p>
+                                </div><!--//desc-->                          
+                            </div><!--//item-->
+                        </div><!--//content-->  
+                    </div><!--//section-inner-->                
+                </section><!--//section-->
+                
+                <section class="experience section">
+                    <div class="section-inner shadow-sm rounded">
+                        <h2 class="heading">Work Experience</h2>
+                        <div class="content">
+                            <div class="item">
+                                <h3 class="title">STEP Intern - 
+                                    <span class="place"><a href="https://careers.google.com/students/" target="_blank">Google</a></span> 
+                                    <span class="year">(Summer 2020)</span>
+                                </h3>
+                                <p>
+                                    I am currently working as an intern at Google on the Search Infrastructure team! I am really excited to meet people 
+                                    and learn new things this summer!
+                                </p>
+                            </div><!--//item-->
+
+                            <div class="item">
+                                <h3 class="title">Software Engineer Intern - 
+                                    <span class="place"><a href="https://www.theglimpsegroup.com/" target="_blank">The Glimpse Group</a></span>
+                                    <span class="year">(Summer 2019)</span>
+                                </h3>
+                                <p>
+                                    Designed and implemented web-based analytics solution that pulled data from Google Firebase and BigQuery into an 
+                                    interactive, user-friendly dashboard. Created Jupyter Notebook that generated graphics displaying the impacts new 
+                                    computer vision features had on marker detection speed and accuracy.
+                                </p>
+                            </div><!--//item-->
+                            
+                            <div class="item">
+                                <h3 class="title">Teaching Assistant - 
+                                    <span class="place"><a href="https://www.pomona.edu/academics/departments/computer-science" target="_blank">Pomona College Computer Science</a></span>
+                                    <span class="year">(2019 - Present)</span>
+                                </h3>
+                                <p>
+                                    Since freshman year, have been a teaching assistant for Intro to CS with Topics in AI as well as Data Structures. 
+                                    Led weekly mentor sessions to review labs, assignments, and concepts. Collaborated with professors on grading and 
+                                    improving the course.
+                                </p>
+                            </div><!--//item-->
+
+                            <div class="item">
+                                <h3 class="title">Research Intern - 
+                                    <span class="place"><a href="https://www.mskcc.org/research-areas/labs/david-solit" target="_blank">Memorial Sloan Kettering Cancer Center</a></span>
+                                    <span class="year">(Summer 2015, 2016)</span>
+                                </h3>
+                                <p>
+                                    Spent two summers working in David Solit's Lab as part of the Human Oncology &amp; Pathogenesis Program. Used Cas9/CRISPR
+                                    to introduce MEK mutations into human cell lines. At the end of the program, I presented my research at the Zuckerman
+                                    Research Center.
+                                </p>
+                            </div><!--//item-->
+                        </div><!--//content-->  
+                    </div><!--//section-inner-->                 
+                </section><!--//section-->
+                <section class="interests section">
+                    <div class="section-inner shadow-sm rounded">
+                        <h2 class="heading">Other Interests</h2>
+                        <!--TODO: figure out why script doesn't work if I put it at bottom -->
+                        <div id="myEmbeddedScene">
+                            <a-scene background="color: #ECECEC" embedded>
+                                <!-- extra shapes -->
+                                <a-box position="-4 0.5 -3" rotation="0 45 0" color="#4CC3D9" shadow></a-box>
+                                <a-cylinder position="4 0.75 -3" radius="0.5" height="1.5" color="#FFC65D" shadow></a-cylinder>
+
+                                <!--   pillars -->
+                                <a-cylinder position="-1.25 1 -3" rotation="0 0 0" radius="0.1" height="2" color="magenta"></a-cylinder>
+                                <a-cylinder position="1.25 1 -3" radius="0.1" height="2" color="magenta"></a-cylinder>
+
+                                <!--   banner -->
+                                <a-box color="tomato" position="0 1.7 -3" rotation="0 0 0" depth="0.1" height="0.5" width="2.5"></a-box>
+                                <a-text value="Jack's Interests!" position="-1.1 1.7 -2.9" width="6.5" color="black"></a-text>
+                                
+                                <!-- Clouds -->
+                                <a-entity rotation="0 0 0" animation="property: object3D.position.x; to: 35; delay: 200; dur: 50000; easing: linear; loop: true">
+                                    <a-box  position="-20 5 -10"  color="white" opacity="0.8" width="4" depth="2" height="0.75" material="" geometry=""></a-box>
+                                    <a-text position="-20 4.85 -8.5" value="Podcasts" width="8" color="black" align="center"></a-text>
+                                </a-entity>
+                                
+                                <a-entity rotation="0 0 0" animation="property: object3D.position.x; to: 40; delay: 400; dur: 50000; easing: linear; loop: true">
+                                    <a-box  position="-20 2 -12"  color="white" opacity="0.8" width="4" depth="2" height="0.75" material="" geometry=""></a-box>
+                                    <a-text position="-20 1.85 -10.5" value="Periodic Table" width="8" color="black" align="center"></a-text>
+                                </a-entity>
+                                
+                                <a-entity rotation="0 0 0" animation="property: object3D.position.x; to: 40; delay: 600; dur: 50000; easing: linear; loop: true">
+                                    <a-box  position="-20 8 -12"  color="white" opacity="0.8" width="4" depth="2" height="0.75" material="" geometry=""></a-box>
+                                    <a-text position="-20 7.85 -10.5" value="Frisbee" width="8" color="black" align="center"></a-text>
+                                </a-entity>
+                                
+                                <a-entity rotation="0 0 0" animation="property: object3D.position.x; to: 40; delay: 25000; dur: 50000; easing: linear; loop: true">
+                                    <a-box  position="-20 3 -10"  color="white" opacity="0.8" width="4" depth="2" height="0.75" material="" geometry=""></a-box>
+                                    <a-text position="-20 2.85 -8.5" value="3D Printing" width="8" color="black" align="center"></a-text>
+                                </a-entity>
+                                                 
+                                <!-- Environment-->
+                                <a-entity environment="preset: forest; groundColor: #445; grid: cross; lightPosition: 0 4 3;"></a-entity>
+                            </a-scene>
+                        </div><!--//myEmbeddedScene-->                        
+                    </div><!--//secton-inner-->
+                </section><!--//section-->
+            </div><!--//primary-->
+            <div class="secondary col-lg-4 col-12">
+                 <aside class="info aside section">
+                    <div class="section-inner shadow-sm rounded">
+                        <h2 class="heading sr-only">Basic Information</h2>
+                        <div class="content">
+                            <ul class="list-unstyled">
+                                <li>
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span class="sr-only">Location:</span>
+                                    New York, US
+                                </li>
+                                <li>
+                                    <i class="fas fa-envelope"></i>
+                                    <span class="sr-only">Email:</span>
+                                    <a href="mailto:jackweber@google.com">jackweber@google.com</a>
+                                </li>
+                            </ul>
+                        </div><!--//content-->  
+                    </div><!--//section-inner-->                 
+                </aside><!--//aside-->
+                
+                <aside class="skills aside section">
+                    <div class="section-inner shadow-sm rounded">
+                        <h2 class="heading">Skills</h2>
+                        <div class="content">
+                            <div class="skillset">
+                                <div class="item">
+                                    <h3 class="level-title">
+                                        Python
+                                        <span 
+                                            class="level-label" 
+                                            data-toggle="tooltip" 
+                                            data-placement="left" 
+                                            data-animation="true" 
+                                            title="Used Flask for backends. Experience with Jupyter Notebooks and pandas for data science. ">
+                                            <i class="fas fa-info-circle"></i>
+                                        </span>
+                                    </h3>
+                                    <div class="level-bar">
+                                        <div class="level-bar-inner" data-level="90%">
+                                        </div>                                      
+                                    </div><!--//level-bar-->                                 
+                                </div><!--//item-->
+                                
+                                <div class="item">
+                                    <h3 class="level-title">
+                                        Javascript &amp; React
+                                        <span 
+                                            class="level-label" 
+                                            data-toggle="tooltip" 
+                                            data-placement="left" 
+                                            data-animation="true" 
+                                            title="Used React.js and Material UI to build multiple frontends for both personal projects and internships">
+                                            <i class="fas fa-info-circle"></i>
+                                        </span>
+                                    </h3>
+                                    <div class="level-bar">
+                                        <div class="level-bar-inner" data-level="84%">
+                                        </div>                                      
+                                    </div><!--//level-bar-->                                 
+                                </div><!--//item-->
+                                
+                                <div class="item">
+                                    <h3 class="level-title">
+                                        Java
+                                        <span 
+                                            class="level-label" 
+                                            data-toggle="toltip" 
+                                            data-placement="left" 
+                                            data-animation="true" 
+                                            title="Work as a teaching assistant for Data Structures which is taught in java">
+                                            <i class="fas fa-info-circle"></i>
+                                        </span>
+                                    </h3>
+                                    <div class="level-bar">
+                                        <div class="level-bar-inner" data-level="80%">
+                                        </div>                                      
+                                    </div><!--//level-bar-->                                 
+                                </div><!--//item-->
+                                
+                                <div class="item">
+                                    <h3 class="level-title">
+                                        Databases &amp; SQL
+                                        <span 
+                                            class="level-label" 
+                                            data-toggle="tooltip" 
+                                            data-placement="left" 
+                                            data-animation="true" 
+                                            title="Took upper level Database Systems elective where we built database applications">
+                                            <i class="fas fa-info-circle"></i>
+                                        </span>
+                                    </h3>
+                                    <div class="level-bar">
+                                        <div class="level-bar-inner" data-level="88%">
+                                        </div>                                      
+                                    </div><!--//level-bar-->                                 
+                                </div><!--//item-->
+                                
+                                <p>
+                                    <a class="more-link" href="https://www.linkedin.com/in/jackdavidweber">
+                                        <i class="fas fa-external-link-alt"></i>
+                                        More on LinkedIn
+                                    </a>
+                                </p> 
+                            </div>              
+                        </div><!--//content-->  
+                    </div><!--//section-inner-->                 
+                </aside><!--//section-->
+                
+                <aside class="education aside section">
+                    <div class="section-inner shadow-sm rounded">
+                        <h2 class="heading">Education</h2>
+                        <div class="content">
+                            <div class="item">                      
+                                <h3 class="title">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    BA Computer Science
+                                </h3>
+                                <h4 class="university">
+                                    Pomona College
+                                    <span class="year">(2018-2022)</span>
+                                </h4>
+                            </div><!--//item-->
+                        </div><!--//content-->
+                    </div><!--//section-inner-->
+                </aside><!--//section-->
+                            
+                <aside class="languages aside section">
+                    <div class="section-inner shadow-sm rounded">
+                        <h2 class="heading">Languages</h2>
+                        <div class="content">
+                            <ul class="list-unstyled">
+                                <li class="item">
+                                    <span class="title">
+                                        <strong>English:</strong>
+                                    </span>
+                                    <span class="level">
+                                        Native Speaker 
+                                        <br class="visible-xs"/>
+                                        <i class="fas fa-star"></i> 
+                                        <i class="fas fa-star"></i> 
+                                        <i class="fas fa-star"></i> 
+                                        <i class="fas fa-star"></i> 
+                                        <i class="fas fa-star"></i> 
+                                    </span>
+                                </li><!--//item-->
+                                <li class="item">
+                                    <span class="title"><strong>Spanish:</strong></span>
+                                    <span class="level">Native Speaker 
+                                        <br class="visible-xs"/>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i> 
+                                        <i class="fas fa-star-half"></i> 
+                                    </span>
+                                </li><!--//item-->
+                            </ul>
+                        </div><!--//content-->
+                    </div><!--//section-inner-->
+                </aside><!--//section-->
+                
+                <aside class="list music aside section">
+                    <div class="section-inner shadow-sm rounded">
+                        <h2 class="heading">Favorite Songs</h2>
+                        <div class="content">
+                            <ul class="list-unstyled">
+                                <li>
+                                    <iframe 
+                                        src="https://open.spotify.com/embed/track/1DrlLvlYd1FIjNavRm6NdX" 
+                                        width="100%" 
+                                        height="80" 
+                                        frameborder="0" 
+                                        allowtransparency="true" 
+                                        allow="encrypted-media"></iframe>
+                                </li>
+                                <li>
+                                    <iframe 
+                                        src="https://open.spotify.com/embed/track/0LO7f7ZJg871B8hLTRzrfB" 
+                                        width="100%" 
+                                        height="80" 
+                                        frameborder="0" 
+                                        allowtransparency="true" 
+                                        allow="encrypted-media"></iframe>
+                                </li>
+                                <li>
+                                    <iframe 
+                                        src="https://open.spotify.com/embed/track/2UMP7bjX5gXfMa2rOj9vxv" 
+                                        width="100%" 
+                                        height="80" 
+                                        frameborder="0" 
+                                        allowtransparency="true" 
+                                        allow="encrypted-media"></iframe>
+                                </li>
+                                <li>
+                                    <iframe 
+                                        src="https://open.spotify.com/embed/track/64TjzuxG5PJ7payjphrOC0" 
+                                        width="100%" 
+                                        height="80" 
+                                        frameborder="0" 
+                                        allowtransparency="true" 
+                                        allow="encrypted-media"></iframe>
+                                </li>                                
+                            </ul>
+                        </div><!--//content-->
+                    </div><!--//section-inner-->
+                </aside><!--//section-->
+                
+                <aside class="Github aside section">
+                    <div class="section-inner shadow-sm rounded">
+                        <h2 class="heading">My Github</h2>
+                        <div id="ghfeed" class="ghfeed">
+                        </div><!--//ghfeed-->
+                    </div><!--//section-inner-->
+                </aside><!--//section-->
+            </div><!--//secondary-->    
+        </div><!--//row-->
+    </div><!--//masonry-->
+    
+    <!-- ******FOOTER****** --> 
+    <footer class="footer">
+        <div class="container text-center">
+                <!--/* This template is free as long as you keep the attribution link below. Thank you for your support. :) If you'd like to use the template without the attribution, you can buy the commercial license via our website: themes.3rdwavemedia.com */-->
+                <small class="copyright">
+                    Designed with <i class="fas fa-heart"></i> by <a href="https://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for developers
+                </small>
+        </div><!--//container-->
+    </footer><!--//footer-->
+ 
+    <!-- Javascript -->          
+    <script type="text/javascript" src="assets/plugins/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/popper.min.js"></script> 
+    <script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>    
+    <script type="text/javascript" src="assets/plugins/jquery-rss/dist/jquery.rss.min.js"></script> 
+    <!-- github activity plugin -->
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.2/mustache.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/github-activity/github-activity-0.1.5.min.js"></script>
+    <!-- custom js -->
+    <script type="text/javascript" src="assets/js/main.js"></script>            
+
+</body>
+</html> 
