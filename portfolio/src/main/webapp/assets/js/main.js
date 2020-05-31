@@ -62,9 +62,6 @@ jQuery(document).ready(function($) {
         }
     );
     
-    /* TODO: remove Github Calendar - https://github.com/IonicaBizau/github-calendar */
-    new GitHubCalendar("#github-graph", "jackdavidweber");
-    
     
     /* Github Activity Feed - https://github.com/caseyscarborough/github-activity */
     GitHubActivity.feed({ username: "jackdavidweber", selector: "#ghfeed" });
