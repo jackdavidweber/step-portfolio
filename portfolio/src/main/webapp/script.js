@@ -30,3 +30,52 @@ function addRandomQuote() {
   const quoteContainer = document.getElementById('quote-container');
   quoteContainer.innerText = quote;
 }
+
+console.log("hello world");
+
+async function getRandomQuoteUsingAsyncAwait() {
+  const response = await fetch('/data');
+  const quote = await response.text();
+  document.getElementById('fetchTutorial').innerText = quote;
+}
+
+
+/**
+ * Fetches comments from the servers and adds them to the DOM.
+ */
+function getCommentsold() {
+  fetch('/data').then(response => response.json()).then((comments) => {
+    // comments is an object, not a string, so we have to
+    // reference its fields to create HTML content
+    console.log(comments);
+    const commentsArr = JSON.parse(comments);
+
+
+    const commentsListElement = document.getElementById('comments');
+    commentsListElement.innerHTML = '';
+    commentsListElement.appendChild(createListElement(commentsArr[0]));
+    
+  });
+}
+
+async function getComments() {
+  const response = await fetch('/data');
+  const comments = await response.text();
+
+  const commentsArr = JSON.parse(comments);
+
+  const commentsListElement = document.getElementById('comments');
+  commentsListElement.innerHTML = '';
+
+  for (var i = 0; i < commentsArr.length; i++) {
+      commentsListElement.appendChild(createListElement(commentsArr[i]));
+
+  }
+}
+
+/** Creates an <li> element containing text. */
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
+}

@@ -28,6 +28,8 @@
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>
 
+    <!-- week2 JS fetching -->
+    <script type="text/javascript" src="script.js"></script>
 
     <script>
       function getRandomArbitrary(min, max){
@@ -517,6 +519,15 @@
                     <div class="section-inner shadow-sm rounded">
                         <h2 class="heading">My Github</h2>
                         <div id="ghfeed" class="ghfeed">
+                        </div><!--//ghfeed-->
+                    </div><!--//section-inner-->
+                </aside><!--//section-->
+
+                <aside class="Comments aside section">
+                    <div class="section-inner shadow-sm rounded">
+                        <h2 class="heading">Comments!</h2>
+                        <button onclick="getComments()">Fetch comments!</button>
+                        <ul id="comments"></ul>
                         </div><!--//ghfeed-->
                     </div><!--//section-inner-->
                 </aside><!--//section-->
