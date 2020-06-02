@@ -81,7 +81,7 @@
   
 </head> 
 
-<body>
+<body onload="getComments()">
     <!-- ******HEADER****** --> 
     <header class="header">
         <div class="container clearfix">                       
@@ -526,7 +526,7 @@
                 <aside class="Comments aside section">
                     <div class="section-inner shadow-sm rounded">
                         <h2 class="heading">Comments!</h2>
-                        <button onclick="getComments()">Fetch comments!</button>
+                        <!-- <button onclick="getComments()">Fetch comments!</button> -->
                         <ul id="comments"></ul>
                         <form action="/data" method="POST">
                             <p>Enter a comment</p>
