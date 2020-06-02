@@ -36,6 +36,7 @@ import com.google.appengine.api.datastore.Query.SortDirection;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
+  private int maxComments = 3;
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -45,14 +46,21 @@ public class DataServlet extends HttpServlet {
     PreparedQuery results = datastore.prepare(query);
     
     List<String> comments = new ArrayList<>();
+    System.out.println(results.asIterable());
     for (Entity entity : results.asIterable()) {
       String comment = (String) entity.getProperty("comment");
       comments.add(comment);
     }
 
-    String json = new Gson().toJson(comments);
+    // only show number of comments specified
+    String json;
+    if (comments.size() < maxComments){
+        json=new Gson().toJson(comments);
+    } else {
+        json=new Gson().toJson(comments.subList(0,maxComments));
+    }
 
-    response.setContentType("text/html;");
+    response.setContentType("application/json;");
     response.getWriter().println(json);
   }
 
@@ -61,17 +69,44 @@ public class DataServlet extends HttpServlet {
     // Get the input from the form.
     String text = getParameter(request, "text-input", "");
     long timestamp = System.currentTimeMillis();
+    maxComments = getMaxCommentsChoice(request);
 
-    Entity commentEntity = new Entity("Comment");
-    commentEntity.setProperty("comment", text);
-    commentEntity.setProperty("timestamp", timestamp);
+    // prevents blank comments from being added
+    if (text.length() > 0){
+        Entity commentEntity = new Entity("Comment");
+        commentEntity.setProperty("comment", text);
+        commentEntity.setProperty("timestamp", timestamp);
 
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    datastore.put(commentEntity);
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        datastore.put(commentEntity);
 
+    }
     response.sendRedirect("/index.html");
-
+    
   }
+
+
+  /**  Returns the choice entered by the user, or -1 if the choice was invalid. */
+  private int getMaxCommentsChoice(HttpServletRequest request) {
+    String commentsChoiceString = request.getParameter("max-comments");
+
+    // Convert the input to an int.
+    int commentsChoice;
+    try {
+      commentsChoice = Integer.parseInt(commentsChoiceString);
+    } catch (NumberFormatException e) {
+      System.err.println("Could not convert to int: " + commentsChoiceString);
+      return maxComments;
+    }
+
+    // Check that the input is greater than 1.
+    if (commentsChoice < 1) {
+      System.err.println("Player choice is out of range: " + commentsChoiceString);
+      return maxComments;
+    }
+
+    return commentsChoice;
+    }
 
   /**
    * @return the request parameter, or the default value if the parameter

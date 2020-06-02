@@ -60,9 +60,7 @@ function getCommentsold() {
 
 async function getComments() {
   const response = await fetch('/data');
-  const comments = await response.text();
-
-  const commentsArr = JSON.parse(comments);
+  const commentsArr = await response.json();
 
   const commentsListElement = document.getElementById('comments');
   commentsListElement.innerHTML = '';

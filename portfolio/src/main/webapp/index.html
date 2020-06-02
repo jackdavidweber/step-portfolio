@@ -526,11 +526,13 @@
                 <aside class="Comments aside section">
                     <div class="section-inner shadow-sm rounded">
                         <h2 class="heading">Comments!</h2>
-                        <!-- <button onclick="getComments()">Fetch comments!</button> -->
                         <ul id="comments"></ul>
                         <form action="/data" method="POST">
+                            <p>Number of Comments Visible (default is 3)</p>
+                            <input type="number" name="max-comments" min="1">
+
                             <p>Enter a comment</p>
-                            <textarea name="text-input">Sample Comment</textarea>
+                            <textarea name="text-input"></textarea>
                             <input type="submit" />
                         </form>
                         </div><!--//ghfeed-->
