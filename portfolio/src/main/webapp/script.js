@@ -31,12 +31,12 @@ function addRandomQuote() {
   quoteContainer.innerText = quote;
 }
 
-async function getRandomQuoteUsingAsyncAwait() {
+
+async function getRandomQuote() {
   const response = await fetch('/data');
   const quote = await response.text();
   document.getElementById('fetchTutorial').innerText = quote;
 }
-
 
 /**
  * Fetches comments from the servers and adds them to the DOM.
