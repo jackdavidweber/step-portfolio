@@ -37,8 +37,8 @@ public class DataServlet extends HttpServlet {
       comments.add("really liked it!");
 
       String json = new Gson().toJson(comments);
-
-    response.setContentType("text/html;");
-    response.getWriter().println(json);
+      
+      response.setContentType("application/json;");
+      response.getWriter().println(json);
   }
 }

@@ -31,8 +31,6 @@ function addRandomQuote() {
   quoteContainer.innerText = quote;
 }
 
-console.log("hello world");
-
 async function getRandomQuoteUsingAsyncAwait() {
   const response = await fetch('/data');
   const quote = await response.text();
@@ -43,13 +41,10 @@ async function getRandomQuoteUsingAsyncAwait() {
 /**
  * Fetches comments from the servers and adds them to the DOM.
  */
-function getCommentsold() {
-  fetch('/data').then(response => response.json()).then((comments) => {
+function getCommentsOld() {
+  fetch('/data').then(response => response.json()).then((commentsArr) => {
     // comments is an object, not a string, so we have to
     // reference its fields to create HTML content
-    console.log(comments);
-    const commentsArr = JSON.parse(comments);
-
 
     const commentsListElement = document.getElementById('comments');
     commentsListElement.innerHTML = '';
@@ -60,16 +55,13 @@ function getCommentsold() {
 
 async function getComments() {
   const response = await fetch('/data');
-  const comments = await response.text();
-
-  const commentsArr = JSON.parse(comments);
+  const commentsArr = await response.json();
 
   const commentsListElement = document.getElementById('comments');
   commentsListElement.innerHTML = '';
 
-  for (var i = 0; i < commentsArr.length; i++) {
+  for (let i = 0; i < commentsArr.length; i++) {
       commentsListElement.appendChild(createListElement(commentsArr[i]));
-
   }
 }
 
