@@ -60,9 +60,7 @@ function getCommentsold() {
 
 async function getComments() {
   const response = await fetch('/data');
-  const comments = await response.text();
-
-  const commentsArr = JSON.parse(comments);
+  const commentsArr = await response.json();
 
   const commentsListElement = document.getElementById('comments');
   commentsListElement.innerHTML = '';
@@ -71,6 +69,11 @@ async function getComments() {
       commentsListElement.appendChild(createListElement(commentsArr[i]));
 
   }
+
+  const numCommentsElement = document.getElementById('numComments');
+  numCommentsElement.innerHTML = "<p>Number of Comments Visible: "+ commentsArr.length.toString() + "</p>"
+
+
 }
 
 /** Creates an <li> element containing text. */
