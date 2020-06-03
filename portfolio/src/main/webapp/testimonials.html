@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Testimonial Controls</title>
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bootstrap 4 Portfolio/Resume Theme for Developers">
+    <meta name="author" content="Xiaoying Riley at 3rd Wave Media">    
+    <link rel="shortcut icon" href="favicon.ico">  
+    
+    <link href='https://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'> 
+    
+    <!-- FontAwesome JS -->
+    <script defer src="assets/fontawesome/js/all.js"></script>
+    
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">   
+    
+    <!-- Theme CSS -->  
+    <link id="theme-style" rel="stylesheet" href="assets/css/styles.css">
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>
+
+
+</head> 
+
+<body onload="getTestimonials()">
+
+    <div class="section-inner shadow-sm rounded">
+        <h2 class="heading">Testimonials!</h2>
+        <form action="/data" method="POST">
+            <div id="numTestimonials"></div>
+            <input type="number" name="max-testimonials" min="1">
+
+            <p>Enter a testimonial</p>
+            <textarea name="userTestimonial"></textarea>
+            
+            <br>
+            <input type="submit" value="Add Testimonial" />
+        </form> 
+        <br>
+        <form action="/delete-data" method="POST">
+            <input type="submit" value="Delete"/>
+        </form>
+    </div><!--//section-inner-->
+
+    <!-- custom js -->
+    <script type="text/javascript" src="assets/js/main.js"></script>            
+
+</body>
+</html> 
