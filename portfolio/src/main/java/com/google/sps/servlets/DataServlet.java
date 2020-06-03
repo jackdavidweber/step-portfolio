@@ -33,33 +33,31 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+/** Servlet that returns some example content. TODO: modify this file to handle tstls data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-  private int maxComments = 3;
+  private int maxTstls = 3;
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+    Query query = new Query("Testimonial").addSort("timestamp", SortDirection.DESCENDING);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
     
-    ArrayList<String> comments = new ArrayList<>();
+    ArrayList<String> arrTstls = new ArrayList<>();
     System.out.println(results.asIterable());
     for (Entity entity : results.asIterable()) {
-      String comment = (String) entity.getProperty("comment");
-      comments.add(comment);
+      String tstl = (String) entity.getProperty("testimonial");
+      arrTstls.add(tstl);
     }
 
-    Testimonials tests = new Testimonials();
-    tests.setArrTestimonials(comments.size() < maxComments ? comments : new ArrayList(comments.subList(0,maxComments)));
+    Testimonials tstls = new Testimonials();
+    tstls.setArrTestimonials(arrTstls.size() < maxTstls ? arrTstls : new ArrayList(arrTstls.subList(0,maxTstls)));
 
-    Gson gson = new Gson();
-    String commentsJson = gson.toJson(tests);
-    
+    Gson gson = new Gson();    
     response.setContentType("application/json;");
-    response.getWriter().println(commentsJson);
+    response.getWriter().println(gson.toJson(tstls));
   }
 
 @Override
@@ -67,41 +65,41 @@ public class DataServlet extends HttpServlet {
     // Get the input from the form.
     String text = getParameter(request, "userComment", "");
     long timestamp = System.currentTimeMillis();
-    maxComments = getMaxCommentsChoice(request);
+    maxTstls = getMaxTstlsChoice(request);
 
-    // prevents blank comments from being added
+    // prevents blank tstls from being added
     if (text.length() > 0){
-        Entity commentEntity = new Entity("Comment");
-        commentEntity.setProperty("comment", text);
-        commentEntity.setProperty("timestamp", timestamp);
+        Entity tstlEntity = new Entity("Testimonial");
+        tstlEntity.setProperty("testimonial", text);
+        tstlEntity.setProperty("timestamp", timestamp);
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        datastore.put(commentEntity);
+        datastore.put(tstlEntity);
     }
     response.sendRedirect("/index.html");
   }
 
 
   /**  Returns the choice entered by the user, or -1 if the choice was invalid. */
-  private int getMaxCommentsChoice(HttpServletRequest request) {
-    String commentsChoiceString = request.getParameter("max-comments");
+  private int getMaxTstlsChoice(HttpServletRequest request) {
+    String tstlChoiceString = request.getParameter("max-comments");
 
     // Convert the input to an int.
-    int commentsChoice;
+    int tstlChoice;
     try {
-      commentsChoice = Integer.parseInt(commentsChoiceString);
+      tstlChoice = Integer.parseInt(tstlChoiceString);
     } catch (NumberFormatException e) {
-      System.err.println("Could not convert to int: " + commentsChoiceString);
-      return maxComments;
+      System.err.println("Could not convert to int: " + tstlChoiceString);
+      return maxTstls;
     }
 
     // Check that the input is greater than 1.
-    if (commentsChoice < 1) {
-      System.err.println("User choice is out of range: " + commentsChoiceString);
-      return maxComments;
+    if (tstlChoice < 1) {
+      System.err.println("User choice is out of range: " + tstlChoiceString);
+      return maxTstls;
     }
 
-    return commentsChoice;
+    return tstlChoice;
     }
 
   /**
