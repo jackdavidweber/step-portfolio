@@ -72,17 +72,17 @@ async function getTestimonials() {
   const response = await fetch('/data');
   const result = await response.json();
   
-  arrTstls = result["arrTestimonials"];
+  arrTestimonials = result["arrTestimonials"];
 
-  const tstlsListElement = document.getElementById('testimonials');
-  tstlsListElement.innerHTML = '';
+  const testimonialsListElement = document.getElementById('testimonials');
+  testimonialsListElement.innerHTML = '';
 
-  for (let i = 0; i < arrTstls.length; i++) {
-      tstlsListElement.appendChild(createListElement(arrTstls[i]));
+  for (let i = 0; i < arrTestimonials.length; i++) {
+      testimonialsListElement.appendChild(createListElement(arrTestimonials[i]));
   }
 
-  const numTstlsElement = document.getElementById('numTestimonials');
-  numTstlsElement.innerHTML = "<p>Number of Testimonials Visible: "+ arrTstls.length.toString() + "</p>"
+  const numTestimonialsElement = document.getElementById('numTestimonials');
+  numTestimonialsElement.innerHTML = "<p>Number of Testimonials Visible: "+ arrTestimonials.length.toString() + "</p>"
 
 
 }

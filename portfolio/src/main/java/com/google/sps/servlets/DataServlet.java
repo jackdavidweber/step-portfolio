@@ -33,10 +33,10 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 
-/** Servlet that returns some example content. TODO: modify this file to handle tstls data */
+/** Servlet that returns some example content. TODO: modify this file to handle testimonials data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-  private int maxTstls = 3;
+  private int maxTestimonials = 3;
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -45,19 +45,19 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
     
-    ArrayList<String> arrTstls = new ArrayList<>();
+    ArrayList<String> arrTestimonials = new ArrayList<>();
     System.out.println(results.asIterable());
     for (Entity entity : results.asIterable()) {
-      String tstl = (String) entity.getProperty("testimonial");
-      arrTstls.add(tstl);
+      String testimonial = (String) entity.getProperty("testimonial");
+      arrTestimonials.add(testimonial);
     }
 
-    Testimonials tstls = new Testimonials();
-    tstls.setArrTestimonials(arrTstls.size() < maxTstls ? arrTstls : new ArrayList(arrTstls.subList(0,maxTstls)));
+    Testimonials testimonials = new Testimonials();
+    testimonials.setArrTestimonials(arrTestimonials.size() < maxTestimonials ? arrTestimonials : new ArrayList(arrTestimonials.subList(0,maxTestimonials)));
 
     Gson gson = new Gson();    
     response.setContentType("application/json;");
-    response.getWriter().println(gson.toJson(tstls));
+    response.getWriter().println(gson.toJson(testimonials));
   }
 
 @Override
@@ -65,41 +65,41 @@ public class DataServlet extends HttpServlet {
     // Get the input from the form.
     String text = getParameter(request, "userTestimonial", "");
     long timestamp = System.currentTimeMillis();
-    maxTstls = getMaxTstlsChoice(request);
+    maxTestimonials = getMaxTestimonialsChoice(request);
 
-    // prevents blank tstls from being added
+    // prevents blank testimonials from being added
     if (text.length() > 0){
-        Entity tstlEntity = new Entity("Testimonial");
-        tstlEntity.setProperty("testimonial", text);
-        tstlEntity.setProperty("timestamp", timestamp);
+        Entity testimonialEntity = new Entity("Testimonial");
+        testimonialEntity.setProperty("testimonial", text);
+        testimonialEntity.setProperty("timestamp", timestamp);
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        datastore.put(tstlEntity);
+        datastore.put(testimonialEntity);
     }
     response.sendRedirect("/index.html");
   }
 
 
   /**  Returns the choice entered by the user, or -1 if the choice was invalid. */
-  private int getMaxTstlsChoice(HttpServletRequest request) {
-    String tstlChoiceString = request.getParameter("max-testimonials");
+  private int getMaxTestimonialsChoice(HttpServletRequest request) {
+    String testimonialChoiceString = request.getParameter("max-testimonials");
 
     // Convert the input to an int.
-    int tstlChoice;
+    int testimonialChoice;
     try {
-      tstlChoice = Integer.parseInt(tstlChoiceString);
+      testimonialChoice = Integer.parseInt(testimonialChoiceString);
     } catch (NumberFormatException e) {
-      System.err.println("Could not convert to int: " + tstlChoiceString);
-      return maxTstls;
+      System.err.println("Could not convert to int: " + testimonialChoiceString);
+      return maxTestimonials;
     }
 
     // Check that the input is greater than 1.
-    if (tstlChoice < 1) {
-      System.err.println("User choice is out of range: " + tstlChoiceString);
-      return maxTstls;
+    if (testimonialChoice < 1) {
+      System.err.println("User choice is out of range: " + testimonialChoiceString);
+      return maxTestimonials;
     }
 
-    return tstlChoice;
+    return testimonialChoice;
     }
 
   /**
