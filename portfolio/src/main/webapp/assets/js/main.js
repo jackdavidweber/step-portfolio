@@ -68,3 +68,28 @@ jQuery(document).ready(function($) {
 
 
 });
+
+
+async function getComments() {
+  const response = await fetch('/data');
+  const commentsArr = await response.json();
+
+  const commentsListElement = document.getElementById('comments');
+  commentsListElement.innerHTML = '';
+
+  for (let i = 0; i < commentsArr.length; i++) {
+      commentsListElement.appendChild(createListElement(commentsArr[i]));
+  }
+
+  const numCommentsElement = document.getElementById('numComments');
+  numCommentsElement.innerHTML = "<p>Number of Comments Visible: "+ commentsArr.length.toString() + "</p>"
+
+
+}
+
+/** Creates an <li> element containing text. */
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
+}
