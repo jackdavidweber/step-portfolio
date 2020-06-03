@@ -78,7 +78,7 @@ async function getTestimonials() {
   testimonialsListElement.innerHTML = '';
 
   for (let i = 0; i < arrTestimonials.length; i++) {
-      testimonialsListElement.appendChild(createListElement(arrTestimonials[i]));
+      testimonialsListElement.appendChild(createTestimonialElement(arrTestimonials[i], "authorName", "titleName"));
   }
 
   const numTestimonialsElement = document.getElementById('numTestimonials');
@@ -91,3 +91,50 @@ function createListElement(text) {
   liElement.innerText = text;
   return liElement;
 }
+
+function createTestimonialElement(text, author, title){
+    //set up block quote
+    testimonialElement = `
+        <blockquote class="quote">
+            <p><i class="fas fa-quote-left"></i>
+        `;
+    
+    //add testimonial text
+    testimonialElement += text + '</p></blockquote>';
+    
+    //author attribution
+    testimonialElement += '<p class="source"><span class="name">' + author + "</span>";
+
+    //author title
+    testimonialElement += '<br /><span class="title">' + title + '</span></p>'
+
+    testimonialElementDiv = document.createElement('div');
+    testimonialElementDiv.innerHTML = testimonialElement;
+
+    return testimonialElementDiv;
+
+
+    // // create block quote
+    // const blockQuoteElement = document.createElement('blockquote');
+    // blockQuoteElement.setAttribute("class", "quote");
+    // const blockQuoteParagraphElement = document.createElement('p');
+    // const iTagElement = document.createElement('i').setAttribute("class","fas fa-quote-left")
+
+    // blockQuoteParagraphElement.appendChild(iTagElement);
+    // blockQuoteParagraphElement.innerText = text;
+    // blockQuoteElement.appendChild(blockQuoteParagraphElement);
+    
+    // // create author and title
+    // const paragraphElement = document.createElement('p').setAttribute("class","source");
+    // const spanElement = document.createElement("span").setAttribute("class","name");
+    // spanElement.innerText = "Fill in with AuthorName"
+    
+
+
+}
+
+
+                                // <blockquote class="quote">                                  
+                                //     <p><i class="fas fa-quote-left"></i>James is an excellent software engineer and he is passionate about what he does. You can totally unt on him to deliver your projects!</p>
+                                // </blockquote>                
+                                // <p class="source"><span class="name">Tim Adams</span><br /><span class="title">Curabitur commodo</span></p>           
