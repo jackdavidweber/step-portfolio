@@ -45,21 +45,19 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
     
-    List<String> comments = new ArrayList<>();
+    ArrayList<String> comments = new ArrayList<>();
     System.out.println(results.asIterable());
     for (Entity entity : results.asIterable()) {
       String comment = (String) entity.getProperty("comment");
       comments.add(comment);
     }
 
-    // only show number of comments specified
-    String commentsJson;
-    if (comments.size() < maxComments){
-        commentsJson = new Gson().toJson(comments);
-    } else {
-        commentsJson = new Gson().toJson(comments.subList(0,maxComments));
-    }
+    Testimonials tests = new Testimonials();
+    tests.setArrTestimonials(comments.size() < maxComments ? comments : new ArrayList(comments.subList(0,maxComments)));
 
+    Gson gson = new Gson();
+    String commentsJson = gson.toJson(tests);
+    
     response.setContentType("application/json;");
     response.getWriter().println(commentsJson);
   }

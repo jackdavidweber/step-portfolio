@@ -70,7 +70,9 @@ jQuery(document).ready(function($) {
 
 async function getComments() {
   const response = await fetch('/data');
-  const commentsArr = await response.json();
+  const result = await response.json();
+  
+  commentsArr = result["arrTestimonials"];
 
   const commentsListElement = document.getElementById('comments');
   commentsListElement.innerHTML = '';
