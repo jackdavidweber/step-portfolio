@@ -72,17 +72,17 @@ async function getComments() {
   const response = await fetch('/data');
   const result = await response.json();
   
-  commentsArr = result["arrTestimonials"];
+  arrTstls = result["arrTestimonials"];
 
-  const commentsListElement = document.getElementById('comments');
-  commentsListElement.innerHTML = '';
+  const tstlsListElement = document.getElementById('comments');
+  tstlsListElement.innerHTML = '';
 
-  for (let i = 0; i < commentsArr.length; i++) {
-      commentsListElement.appendChild(createListElement(commentsArr[i]));
+  for (let i = 0; i < arrTstls.length; i++) {
+      tstlsListElement.appendChild(createListElement(arrTstls[i]));
   }
 
-  const numCommentsElement = document.getElementById('numComments');
-  numCommentsElement.innerHTML = "<p>Number of Comments Visible: "+ commentsArr.length.toString() + "</p>"
+  const numTstlsElement = document.getElementById('numComments');
+  numTstlsElement.innerHTML = "<p>Number of Testimonials Visible: "+ arrTstls.length.toString() + "</p>"
 
 
 }
