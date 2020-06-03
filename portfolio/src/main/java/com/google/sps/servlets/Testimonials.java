@@ -1,4 +1,4 @@
-package com.google.sps.servlets; // is this okay?
+package com.google.sps.servlets;
 
 import java.util.ArrayList;
 
