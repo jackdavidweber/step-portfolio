@@ -29,7 +29,7 @@
     <script src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>
 
     <script>
-      function getRandomArbitrary(min, max){
+      function getRandomBtwn(min, max){
           return Math.random()*(max-min) + min;
       }  
     
@@ -47,11 +47,11 @@
               'Virtual Reality',
             ]
           
-          for (var i = 0; i < 7; i++) {
+          for (let i = 0; i < interestsArr.length; i++) {
             var xpos=-20;
-            var ypos= getRandomArbitrary(1.6, 10);
-            var zpos= getRandomArbitrary(-8,-14);
-            var animationDelay= 10000*i
+            var ypos= getRandomBtwn(1.6, 10);
+            var zpos= getRandomBtwn(-8,-14);
+            var animationDelay= 10000*i;
             
             // create box
             var boxE2 = document.createElement('a-box');
