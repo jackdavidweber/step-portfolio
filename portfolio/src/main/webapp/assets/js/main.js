@@ -83,8 +83,6 @@ async function getTestimonials() {
 
   const numTestimonialsElement = document.getElementById('numTestimonials');
   numTestimonialsElement.innerHTML = "<p>Number of Testimonials Visible: "+ arrTestimonials.length.toString() + "</p>"
-
-
 }
 
 /** Creates an <li> element containing text. */
