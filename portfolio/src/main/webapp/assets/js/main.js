@@ -68,20 +68,20 @@ jQuery(document).ready(function($) {
 });
 
 
-async function getComments() {
+async function getTestimonials() {
   const response = await fetch('/data');
   const result = await response.json();
   
   arrTstls = result["arrTestimonials"];
 
-  const tstlsListElement = document.getElementById('comments');
+  const tstlsListElement = document.getElementById('testimonials');
   tstlsListElement.innerHTML = '';
 
   for (let i = 0; i < arrTstls.length; i++) {
       tstlsListElement.appendChild(createListElement(arrTstls[i]));
   }
 
-  const numTstlsElement = document.getElementById('numComments');
+  const numTstlsElement = document.getElementById('numTestimonials');
   numTstlsElement.innerHTML = "<p>Number of Testimonials Visible: "+ arrTstls.length.toString() + "</p>"
 
 

@@ -75,7 +75,7 @@
     </script>
 </head> 
 
-<body onload="getComments()">
+<body onload="getTestimonials()">
     <!-- ******HEADER****** --> 
     <header class="header">
         <div class="container clearfix">                       
@@ -516,19 +516,19 @@
                     </div><!--//section-inner-->
                 </aside><!--//section-->
 
-                <aside class="Comments aside section">
+                <aside class="Testimonials aside section">
                     <div class="section-inner shadow-sm rounded">
-                        <h2 class="heading">Comments!</h2>
-                        <ul id="comments"></ul>
+                        <h2 class="heading">Testimonials!</h2>
+                        <ul id="testimonials"></ul>
                         <form action="/data" method="POST">
-                            <div id="numComments"></div>
-                            <input type="number" name="max-comments" min="1">
+                            <div id="numTestimonials"></div>
+                            <input type="number" name="max-testimonials" min="1">
 
-                            <p>Enter a comment</p>
-                            <textarea name="userComment"></textarea>
+                            <p>Enter a testimonial</p>
+                            <textarea name="userTestimonial"></textarea>
                           
                             <br>
-                            <input type="submit" value="Comment" />
+                            <input type="submit" value="Add Testimonial" />
                         </form> 
                         <br>
                         <form action="/delete-data" method="POST">

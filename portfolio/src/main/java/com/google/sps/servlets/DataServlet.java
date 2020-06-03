@@ -63,7 +63,7 @@ public class DataServlet extends HttpServlet {
 @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get the input from the form.
-    String text = getParameter(request, "userComment", "");
+    String text = getParameter(request, "userTestimonial", "");
     long timestamp = System.currentTimeMillis();
     maxTstls = getMaxTstlsChoice(request);
 
@@ -82,7 +82,7 @@ public class DataServlet extends HttpServlet {
 
   /**  Returns the choice entered by the user, or -1 if the choice was invalid. */
   private int getMaxTstlsChoice(HttpServletRequest request) {
-    String tstlChoiceString = request.getParameter("max-comments");
+    String tstlChoiceString = request.getParameter("max-testimonials");
 
     // Convert the input to an int.
     int tstlChoice;

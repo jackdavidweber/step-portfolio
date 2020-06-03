@@ -38,7 +38,7 @@ import com.google.appengine.api.datastore.Query.SortDirection;
 public class DeleteData extends HttpServlet {  
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+    Query query = new Query("Testimonial").addSort("timestamp", SortDirection.DESCENDING);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
