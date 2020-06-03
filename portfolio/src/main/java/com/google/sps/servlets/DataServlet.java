@@ -31,16 +31,16 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String json = new Gson().toJson(comments);
+    String commentJson = new Gson().toJson(comments);
 
     response.setContentType("text/html;");
-    response.getWriter().println(json);
+    response.getWriter().println(commentJson);
   }
 
 @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get the input from the form.
-    String text = getParameter(request, "text-input", "");
+    String text = getParameter(request, "userComment", "");
 
     comments.add(text);
 
