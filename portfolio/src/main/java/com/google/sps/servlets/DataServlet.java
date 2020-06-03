@@ -53,15 +53,15 @@ public class DataServlet extends HttpServlet {
     }
 
     // only show number of comments specified
-    String json;
+    String commentsJson;
     if (comments.size() < maxComments){
-        json=new Gson().toJson(comments);
+        commentsJson = new Gson().toJson(comments);
     } else {
-        json=new Gson().toJson(comments.subList(0,maxComments));
+        commentsJson = new Gson().toJson(comments.subList(0,maxComments));
     }
 
     response.setContentType("application/json;");
-    response.getWriter().println(json);
+    response.getWriter().println(commentsJson);
   }
 
 @Override
@@ -101,7 +101,7 @@ public class DataServlet extends HttpServlet {
 
     // Check that the input is greater than 1.
     if (commentsChoice < 1) {
-      System.err.println("Player choice is out of range: " + commentsChoiceString);
+      System.err.println("User choice is out of range: " + commentsChoiceString);
       return maxComments;
     }
 
