@@ -28,11 +28,8 @@
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>
 
-    <!-- week2 JS fetching -->
-    <script type="text/javascript" src="script.js"></script>
-
     <script>
-      function getRandomArbitrary(min, max){
+      function getRandomBtwn(min, max){
           return Math.random()*(max-min) + min;
       }  
     
@@ -50,11 +47,11 @@
               'Virtual Reality',
             ]
           
-          for (var i = 0; i < 7; i++) {
+          for (let i = 0; i < interestsArr.length; i++) {
             var xpos=-20;
-            var ypos= getRandomArbitrary(1.6, 10);
-            var zpos= getRandomArbitrary(-8,-14);
-            var animationDelay= 10000*i
+            var ypos= getRandomBtwn(1.6, 10);
+            var zpos= getRandomBtwn(-8,-14);
+            var animationDelay= 10000*i;
             
             // create box
             var boxE2 = document.createElement('a-box');
@@ -72,16 +69,13 @@
             textEl.setAttribute('animation', 'property: object3D.position.x; to:35; dur:50000; easing: linear; loop:true');
             textEl.setAttribute('animation', {delay: animationDelay})
             sceneEl.appendChild(textEl);
-
-            
           }
         }
       });
     </script>
-  
 </head> 
 
-<body onload="getComments()">
+<body onload="getTestimonials()">
     <!-- ******HEADER****** --> 
     <header class="header">
         <div class="container clearfix">                       
@@ -120,8 +114,6 @@
                         <h2 class="heading">About Me</h2>
                         <div class="content">
                             <p>
-                                <button onclick="getRandomQuote()">Fetch!</button>
-                                <div id=fetchTutorial></div>
                                 I am a sophmore at Pomona College studying Computer Science! Outside my major, I love learning about 
                                 political philosophy (Plato, Hobbes, Locke) and genetics (ethics, CRISPR, big data genomics). I am on
                                 the Claremont Colleges Ultimate Frisbee team and I like to climb both rocks and 
@@ -281,9 +273,8 @@
                 <section class="interests section">
                     <div class="section-inner shadow-sm rounded">
                         <h2 class="heading">Other Interests</h2>
-                        <!--TODO: figure out why script doesn't work if I put it at bottom -->
-                        <div id="myEmbeddedScene">
 
+                        <div id="myEmbeddedScene">
                             <a-scene interests background="color: #ECECEC" embedded>
                                 <!-- Giant J-->
                                 <a-box scale="10 16 8" position="-20 2 -10"  color="#4CC3D9" shadow></a-box>
@@ -303,12 +294,12 @@
 
                                 <!-- Environment-->
                                 <a-entity environment="preset: forest; groundColor: #445; grid: cross; lightPosition: 0 4 3;"></a-entity>      
-
                             </a-scene>
                         </div><!--//myEmbeddedScene-->                        
                     </div><!--//secton-inner-->
                 </section><!--//section-->
             </div><!--//primary-->
+
             <div class="secondary col-lg-4 col-12">
                  <aside class="info aside section">
                     <div class="section-inner shadow-sm rounded">
@@ -525,23 +516,24 @@
                     </div><!--//section-inner-->
                 </aside><!--//section-->
 
-                <aside class="Comments aside section">
+                <aside class="Testimonials aside section">
                     <div class="section-inner shadow-sm rounded">
-                        <h2 class="heading">Comments!</h2>
-                        <ul id="comments"></ul>
+                        <h2 class="heading">Testimonials!</h2>
+                        <ul id="testimonials"></ul>
                         <form action="/data" method="POST">
-                            <div id="numComments"></div>
-                            <input type="number" name="max-comments" min="1">
+                            <div id="numTestimonials"></div>
+                            <input type="number" name="max-testimonials" min="1">
 
-                            <p>Enter a comment</p>
-                            <textarea name="userComment"></textarea>
+                            <p>Enter a testimonial</p>
+                            <textarea name="userTestimonial"></textarea>
                           
-                            <input type="submit" value="Comment" />
-                        </form>
+                            <br>
+                            <input type="submit" value="Add Testimonial" />
+                        </form> 
+                        <br>
                         <form action="/delete-data" method="POST">
                             <input type="submit" value="Delete"/>
                         </form>
-                        </div><!--//ghfeed-->
                     </div><!--//section-inner-->
                 </aside><!--//section-->
             </div><!--//secondary-->    

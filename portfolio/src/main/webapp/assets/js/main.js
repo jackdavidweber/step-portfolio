@@ -62,9 +62,32 @@ jQuery(document).ready(function($) {
         }
     );
     
-    
     /* Github Activity Feed - https://github.com/caseyscarborough/github-activity */
     GitHubActivity.feed({ username: "jackdavidweber", selector: "#ghfeed" });
 
-
 });
+
+
+async function getTestimonials() {
+  const response = await fetch('/data');
+  const result = await response.json();
+  
+  arrTestimonials = result["arrTestimonials"];
+
+  const testimonialsListElement = document.getElementById('testimonials');
+  testimonialsListElement.innerHTML = '';
+
+  for (let i = 0; i < arrTestimonials.length; i++) {
+      testimonialsListElement.appendChild(createListElement(arrTestimonials[i]));
+  }
+
+  const numTestimonialsElement = document.getElementById('numTestimonials');
+  numTestimonialsElement.innerHTML = "<p>Number of Testimonials Visible: "+ arrTestimonials.length.toString() + "</p>"
+}
+
+/** Creates an <li> element containing text. */
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
+}

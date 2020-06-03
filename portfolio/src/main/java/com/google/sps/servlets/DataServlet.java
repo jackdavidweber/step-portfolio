@@ -33,77 +33,73 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+/** Servlet that returns some example content. TODO: modify this file to handle testimonials data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-  private int maxComments = 3;
+  private int maxTestimonials = 3;
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+    Query query = new Query("Testimonial").addSort("timestamp", SortDirection.DESCENDING);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
     
-    List<String> comments = new ArrayList<>();
+    ArrayList<String> arrTestimonials = new ArrayList<>();
     System.out.println(results.asIterable());
     for (Entity entity : results.asIterable()) {
-      String comment = (String) entity.getProperty("comment");
-      comments.add(comment);
+      String testimonial = (String) entity.getProperty("testimonial");
+      arrTestimonials.add(testimonial);
     }
 
-    // only show number of comments specified
-    String commentsJson;
-    if (comments.size() < maxComments){
-        commentsJson = new Gson().toJson(comments);
-    } else {
-        commentsJson = new Gson().toJson(comments.subList(0,maxComments));
-    }
+    Testimonials testimonials = new Testimonials();
+    testimonials.setArrTestimonials(arrTestimonials.size() < maxTestimonials ? arrTestimonials : new ArrayList(arrTestimonials.subList(0,maxTestimonials)));
 
+    Gson gson = new Gson();    
     response.setContentType("application/json;");
-    response.getWriter().println(commentsJson);
+    response.getWriter().println(gson.toJson(testimonials));
   }
 
 @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get the input from the form.
-    String text = getParameter(request, "userComment", "");
+    String text = getParameter(request, "userTestimonial", "");
     long timestamp = System.currentTimeMillis();
-    maxComments = getMaxCommentsChoice(request);
+    maxTestimonials = getMaxTestimonialsChoice(request);
 
-    // prevents blank comments from being added
+    // prevents blank testimonials from being added
     if (text.length() > 0){
-        Entity commentEntity = new Entity("Comment");
-        commentEntity.setProperty("comment", text);
-        commentEntity.setProperty("timestamp", timestamp);
+        Entity testimonialEntity = new Entity("Testimonial");
+        testimonialEntity.setProperty("testimonial", text);
+        testimonialEntity.setProperty("timestamp", timestamp);
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        datastore.put(commentEntity);
+        datastore.put(testimonialEntity);
     }
     response.sendRedirect("/index.html");
   }
 
 
   /**  Returns the choice entered by the user, or -1 if the choice was invalid. */
-  private int getMaxCommentsChoice(HttpServletRequest request) {
-    String commentsChoiceString = request.getParameter("max-comments");
+  private int getMaxTestimonialsChoice(HttpServletRequest request) {
+    String testimonialChoiceString = request.getParameter("max-testimonials");
 
     // Convert the input to an int.
-    int commentsChoice;
+    int testimonialChoice;
     try {
-      commentsChoice = Integer.parseInt(commentsChoiceString);
+      testimonialChoice = Integer.parseInt(testimonialChoiceString);
     } catch (NumberFormatException e) {
-      System.err.println("Could not convert to int: " + commentsChoiceString);
-      return maxComments;
+      System.err.println("Could not convert to int: " + testimonialChoiceString);
+      return maxTestimonials;
     }
 
     // Check that the input is greater than 1.
-    if (commentsChoice < 1) {
-      System.err.println("User choice is out of range: " + commentsChoiceString);
-      return maxComments;
+    if (testimonialChoice < 1) {
+      System.err.println("User choice is out of range: " + testimonialChoiceString);
+      return maxTestimonials;
     }
 
-    return commentsChoice;
+    return testimonialChoice;
     }
 
   /**
