@@ -33,22 +33,20 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+/** Servlet that deletes comments */
 @WebServlet("/delete-data")
 public class DeleteData extends HttpServlet {  
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    System.out.println("hi");
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
-    System.out.println(results.asIterable());
     for (Entity entity : results.asIterable()) {
         datastore.delete(entity.getKey());
     }
-    response.sendRedirect("/index.html");
 
+    response.sendRedirect("/index.html");
   }
 }
