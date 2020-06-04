@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Bootstrap 4 Portfolio/Resume Theme for Developers">
     <meta name="author" content="Xiaoying Riley at 3rd Wave Media">    
+    <meta name="google-signin-client_id" content="404214930329-3kkfj6agqjgfmdvfmk3dmm131bb5p1ob.apps.googleusercontent.com">
+    
     <link rel="shortcut icon" href="favicon.ico">  
     
     <link href='https://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic' rel='stylesheet' type='text/css'>
@@ -28,7 +30,7 @@
 </head> 
 
 <body onload="getTestimonials()">
-
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
     <div class="section-inner shadow-sm rounded">
         <h2 class="heading">Testimonials!</h2>
         <form action="/data" method="POST">
@@ -47,6 +49,8 @@
         </form>
     </div><!--//section-inner-->
 
+    <!-- Google Sign in -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <!-- custom js -->
     <script type="text/javascript" src="assets/js/main.js"></script>            
 
