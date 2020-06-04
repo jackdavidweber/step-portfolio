@@ -78,18 +78,11 @@ async function getTestimonials() {
   testimonialsListElement.innerHTML = '';
 
   for (let i = 0; i < arrTestimonials.length; i++) {
-      testimonialsListElement.appendChild(createTestimonialElement(arrTestimonials[i], "authorName", "titleName"));
+      testimonialsListElement.appendChild(createTestimonialElement(arrTestimonials[i], googleProfile.getName(), "titleName"));
   }
 
   const numTestimonialsElement = document.getElementById('numTestimonials');
   numTestimonialsElement.innerHTML = "<p>Number of Testimonials Visible: "+ arrTestimonials.length.toString() + "</p>"
-}
-
-/** Creates an <li> element containing text. */
-function createListElement(text) {
-  const liElement = document.createElement('li');
-  liElement.innerText = text;
-  return liElement;
 }
 
 /** Create testimonial html element using the testimonial text,
@@ -129,4 +122,13 @@ function createTestimonialElement(text,author,title){
     testimonialElementDiv.appendChild(paragraphElement);
 
     return testimonialElementDiv;
+}
+
+// sign in through google example
+function onSignIn(googleUser) {
+  googleProfile = googleUser.getBasicProfile();
+  console.log('ID: ' + googleProfile.getId()); // Do not send to your backend! Use an ID token instead.
+  console.log('Name: ' + googleProfile.getName());
+  console.log('Image URL: ' + googleProfile.getImageUrl());
+  console.log('Email: ' + googleProfile.getEmail()); // This is null if the 'email' scope is not present.
 }
