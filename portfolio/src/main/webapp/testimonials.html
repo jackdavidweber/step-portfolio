@@ -32,19 +32,22 @@
     <div class="section-inner shadow-sm rounded">
         <h2 class="heading">Testimonials!</h2>
         <form action="/data" method="POST">
-            <div id="numTestimonials"></div>
-            <input type="number" name="max-testimonials" min="1">
 
             <p>Enter a testimonial</p>
             <textarea name="userTestimonial"></textarea>
             
+            <p>Enter your name</p>
+            <textarea name="name"></textarea>
+            
+            <p> Enter your Company </p>
+            <textarea name="company"></textarea>
+
+            <p> Enter your Title </p>
+            <textarea name="title"></textarea>
+
             <br>
             <input type="submit" value="Add Testimonial" />
-        </form> 
         <br>
-        <form action="/delete-data" method="POST">
-            <input type="submit" value="Delete"/>
-        </form>
     </div><!--//section-inner-->
 
     <!-- custom js -->

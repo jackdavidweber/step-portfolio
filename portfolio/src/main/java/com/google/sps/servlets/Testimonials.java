@@ -19,3 +19,9 @@ public class Testimonials {
       return "Testimonials [ arrTestimonials: "+arrTestimonials+",]"; 
    }  
 }
+
+class innerObj {
+    private String testimonial;
+    private String name;
+    private String title;
+}

@@ -80,9 +80,6 @@ async function getTestimonials() {
   for (let i = 0; i < arrTestimonials.length; i++) {
       testimonialsListElement.appendChild(createTestimonialElement(arrTestimonials[i], "authorName", "titleName"));
   }
-
-  const numTestimonialsElement = document.getElementById('numTestimonials');
-  numTestimonialsElement.innerHTML = "<p>Number of Testimonials Visible: "+ arrTestimonials.length.toString() + "</p>"
 }
 
 /** Creates an <li> element containing text. */

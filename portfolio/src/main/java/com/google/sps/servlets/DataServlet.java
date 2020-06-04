@@ -64,13 +64,19 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get the input from the form.
     String text = getParameter(request, "userTestimonial", "");
+    String name = getParameter(request, "name", "");
+    String company = getParameter(request, "company", "");
+    String title = getParameter(request, "title", "");
+    String combinedTitle = company + ", " + title;
+    
     long timestamp = System.currentTimeMillis();
-    maxTestimonials = getMaxTestimonialsChoice(request);
 
     // prevents blank testimonials from being added
     if (text.length() > 0){
         Entity testimonialEntity = new Entity("Testimonial");
         testimonialEntity.setProperty("testimonial", text);
+        testimonialEntity.setProperty("name", name);
+        testimonialEntity.setProperty("title", combinedTitle);
         testimonialEntity.setProperty("timestamp", timestamp);
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -79,28 +85,6 @@ public class DataServlet extends HttpServlet {
     response.sendRedirect("/index.html");
   }
 
-
-  /**  Returns the choice entered by the user, or -1 if the choice was invalid. */
-  private int getMaxTestimonialsChoice(HttpServletRequest request) {
-    String testimonialChoiceString = request.getParameter("max-testimonials");
-
-    // Convert the input to an int.
-    int testimonialChoice;
-    try {
-      testimonialChoice = Integer.parseInt(testimonialChoiceString);
-    } catch (NumberFormatException e) {
-      System.err.println("Could not convert to int: " + testimonialChoiceString);
-      return maxTestimonials;
-    }
-
-    // Check that the input is greater than 1.
-    if (testimonialChoice < 1) {
-      System.err.println("User choice is out of range: " + testimonialChoiceString);
-      return maxTestimonials;
-    }
-
-    return testimonialChoice;
-    }
 
   /**
    * @return the request parameter, or the default value if the parameter
