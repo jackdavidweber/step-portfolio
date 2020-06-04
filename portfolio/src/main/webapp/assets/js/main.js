@@ -78,7 +78,7 @@ async function getTestimonials() {
   testimonialsListElement.innerHTML = '';
 
   for (let i = 0; i < arrTestimonials.length; i++) {
-      testimonialsListElement.appendChild(createListElement(arrTestimonials[i]));
+      testimonialsListElement.appendChild(createTestimonialElement(arrTestimonials[i], "authorName", "titleName"));
   }
 
   const numTestimonialsElement = document.getElementById('numTestimonials');
@@ -90,4 +90,41 @@ function createListElement(text) {
   const liElement = document.createElement('li');
   liElement.innerText = text;
   return liElement;
+}
+
+function createTestimonialElement(text,author,title){
+    // // create elements within block quote	
+    const blockQuoteParagraphElement = document.createElement('p');	
+    const iTagElement = document.createElement('i');
+    iTagElement.setAttribute("class","fas fa-quote-left");
+    const blockQuoteText = document.createTextNode(text);
+
+    // create block quote wrapper and add all elements to it
+    const blockQuoteElement = document.createElement('blockquote');
+    blockQuoteElement.setAttribute("class", "quote");
+    blockQuoteParagraphElement.appendChild(iTagElement);
+    blockQuoteParagraphElement.appendChild(blockQuoteText);
+    blockQuoteElement.appendChild(blockQuoteParagraphElement);
+
+    // create span elements within author attribution
+    const authorSpanElement = document.createElement("span");
+    authorSpanElement.setAttribute("class","name");
+    authorSpanElement.appendChild(document.createTextNode(author));
+    const titleSpanElement = document.createElement("span");
+    titleSpanElement.setAttribute("class","title");
+    titleSpanElement.appendChild(document.createTextNode(title));
+    
+    //add span and other elements to paragraph element in author attribution
+    const paragraphElement = document.createElement('p');
+    paragraphElement.setAttribute("class","source");	
+    paragraphElement.appendChild(authorSpanElement);
+    paragraphElement.appendChild(document.createElement('br'));
+    paragraphElement.appendChild(titleSpanElement);
+
+    // wrap elements into a div and return
+    testimonialElementDiv = document.createElement('div');
+    testimonialElementDiv.appendChild(blockQuoteElement);
+    testimonialElementDiv.appendChild(paragraphElement);
+
+    return testimonialElementDiv;
 }

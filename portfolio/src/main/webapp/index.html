@@ -516,24 +516,13 @@
                     </div><!--//section-inner-->
                 </aside><!--//section-->
 
-                <aside class="Testimonials aside section">
+                <aside class="testimonials aside section">
                     <div class="section-inner shadow-sm rounded">
-                        <h2 class="heading">Testimonials!</h2>
-                        <ul id="testimonials"></ul>
-                        <form action="/data" method="POST">
-                            <div id="numTestimonials"></div>
-                            <input type="number" name="max-testimonials" min="1">
-
-                            <p>Enter a testimonial</p>
-                            <textarea name="userTestimonial"></textarea>
-                          
-                            <br>
-                            <input type="submit" value="Add Testimonial" />
-                        </form> 
-                        <br>
-                        <form action="/delete-data" method="POST">
-                            <input type="submit" value="Delete"/>
-                        </form>
+                        <h2 class="heading">Testimonials</h2>
+                        <div class="content">
+                            <div class="item" id="testimonials"></div><!--//item-->
+                            <p><a class="more-link" href="testimonials.html"><i class="fas fa-external-link-alt"></i>Click here to add a testimonial</a></p> 
+                        </div><!--//content-->
                     </div><!--//section-inner-->
                 </aside><!--//section-->
             </div><!--//secondary-->    
