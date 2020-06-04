@@ -92,8 +92,10 @@ function createListElement(text) {
   return liElement;
 }
 
+/** Create testimonial html element using the testimonial text,
+author and title of the author. */
 function createTestimonialElement(text,author,title){
-    // // create elements within block quote	
+    // create elements within block quote	
     const blockQuoteParagraphElement = document.createElement('p');	
     const iTagElement = document.createElement('i');
     iTagElement.setAttribute("class","fas fa-quote-left");
