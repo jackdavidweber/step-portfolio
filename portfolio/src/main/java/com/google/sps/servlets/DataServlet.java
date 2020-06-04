@@ -33,6 +33,24 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 
+//google auth imports
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+
+//jsonfactory
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
+
+//HTTP transport
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+
+//collections
+import java.util.Collections;
+
+
 /** Servlet that returns some example content. TODO: modify this file to handle testimonials data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
@@ -64,18 +82,60 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get the input from the form.
     String text = getParameter(request, "userTestimonial", "");
+    String idTokenString = request.getParameter("idTokenString");
+    String idTokenString = null;
+
+
     long timestamp = System.currentTimeMillis();
     maxTestimonials = getMaxTestimonialsChoice(request);
 
-    // prevents blank testimonials from being added
-    if (text.length() > 0){
-        Entity testimonialEntity = new Entity("Testimonial");
-        testimonialEntity.setProperty("testimonial", text);
-        testimonialEntity.setProperty("timestamp", timestamp);
+    // Set up Testimonial entity and add timestamp and testimonial text
+    Entity testimonialEntity = new Entity("Testimonial");
+    testimonialEntity.setProperty("timestamp", timestamp);
+    testimonialEntity.setProperty("testimonial", text);
 
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        datastore.put(testimonialEntity);
+
+    // Initialize Google Verifier
+    JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
+    HttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+
+    GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(httpTransport, jsonFactory)
+        // Specify the CLIENT_ID of the app that accesses the backend:
+        .setAudience(Collections.singletonList("404214930329-3kkfj6agqjgfmdvfmk3dmm131bb5p1ob.apps.googleusercontent.com"))
+        // Or, if multiple clients access the backend:
+        //.setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3))
+        .build();
+     
+    // Verify User through Google and store Information
+    GoogleIdToken idToken = verifier.verify(idTokenString);
+    if (idToken != null) {
+        Payload payload = idToken.getPayload();
+
+        // Print user identifier
+        String userId = payload.getSubject();
+        System.out.println("User ID: " + userId);
+
+        // Get profile information from payload
+        String email = payload.getEmail();
+        boolean emailVerified = Boolean.valueOf(payload.getEmailVerified());
+        String name = (String) payload.get("name");
+        String pictureUrl = (String) payload.get("picture");
+        String locale = (String) payload.get("locale");
+        String familyName = (String) payload.get("family_name");
+        String givenName = (String) payload.get("given_name");
+
+        // store profile information
+        testimonialEntity.setProperty("userID", userID);
+        testimonialEntity.setProperty("email", email);
+        testimonialEntity.setProperty("name", name);
+        testimonialEntity.setProperty("locale", locale);
+    } else {
+        System.out.println("Invalid ID token.");
     }
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(testimonialEntity);
+    
     response.sendRedirect("/index.html");
   }
 
