@@ -47,14 +47,12 @@ public class DataServlet extends HttpServlet {
     
     ArrayList<Testimonial> arrTestimonials = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
-      String text = (String) entity.getProperty("testimonial");
+      String text = (String) entity.getProperty("text");
       String name = (String) entity.getProperty("name");
       String title = (String) entity.getProperty("title");
       Testimonial newTestimonial = new Testimonial(text, name, title);
       arrTestimonials.add(newTestimonial);
     }
-
-    // testimonials.setArrTestimonials(arrTestimonials.size() < maxTestimonials ? arrTestimonials : new ArrayList(arrTestimonials.subList(0,maxTestimonials)));
 
     Gson gson = new Gson();    
     response.setContentType("application/json;");
@@ -64,7 +62,7 @@ public class DataServlet extends HttpServlet {
 @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get the input from the form.
-    String text = getParameter(request, "userTestimonial", "");
+    String text = getParameter(request, "text", "");
     String name = getParameter(request, "name", "");
     String company = getParameter(request, "company", "");
     String title = getParameter(request, "title", "");
@@ -75,7 +73,7 @@ public class DataServlet extends HttpServlet {
     // prevents blank testimonials from being added
     if (text.length() > 0){
         Entity testimonialEntity = new Entity("Testimonial");
-        testimonialEntity.setProperty("testimonial", text);
+        testimonialEntity.setProperty("text", text);
         testimonialEntity.setProperty("name", name);
         testimonialEntity.setProperty("title", combinedTitle);
         testimonialEntity.setProperty("timestamp", timestamp);
