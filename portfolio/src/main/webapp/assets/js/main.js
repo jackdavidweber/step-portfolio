@@ -120,11 +120,11 @@ function createTestimonialElement(text,author,title){
     paragraphElement.appendChild(titleSpanElement);
 
     // wrap elements into a div and return
-    testimonialElementDiv = document.createElement('div');
-    testimonialElementDiv.appendChild(blockQuoteElement);
-    testimonialElementDiv.appendChild(paragraphElement);
+    testimonialElementLi = document.createElement('li');
+    testimonialElementLi.appendChild(blockQuoteElement);
+    testimonialElementLi.appendChild(paragraphElement);
 
-    return testimonialElementDiv;
+    return testimonialElementLi;
 }
 
 function filterFunction() {
