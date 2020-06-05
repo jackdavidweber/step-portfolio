@@ -37,23 +37,10 @@
                 alt="profile image" />
             <div class="profile-content float-left">
                 <h1 class="name">Jack Weber Testimonials</h1>
-                <h2 class="desc">Google Step Intern</h2>   
-                <ul class="social list-inline">
-                    <li class="list-inline-item">
-                        <a href="https://www.linkedin.com/in/jackdavidweber">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a href="https://github.com/jackdavidweber">
-                            <i class="fab fa-github-alt"></i>
-                        </a>
-                    </li>    
-                </ul> 
             </div><!--//profile-->
-            <a class="btn btn-cta-primary float-right" href="mailto:jackweber@google.com" target="_blank">
-                <i class="fas fa-paper-plane"></i>
-                 Contact Me
+            <a class="btn btn-cta-primary float-right" href="index.html" target="_blank">
+                <i class="fa fa-home"></i>
+                 Return to Portfolio
             </a>              
         </div><!--//container-->
     </header><!--//header-->
@@ -64,6 +51,20 @@
                         <div class="section-inner shadow-sm rounded">
                             <h2 class="heading">Testimonials</h2>
                             <div class="content">
+                                <input type="text" id="filterInput" onkeyup="filterFunction()" placeholder="Search for names.." title="Type in a name">
+                                <ul id="testimonialUl">
+                                <li>
+                                    <blockquote class="quote">                                  
+                                        <p><i class="fas fa-quote-left"></i>This is the first testimonial statically defined</p>
+                                    </blockquote>                
+                                    <p class="source"><span class="name">Tim Adams</span><br /><span class="title">Curabitur commodo</span></p>                                                             
+                                </li>
+                                <li>
+                                    <blockquote class="quote">                                  
+                                        <p><i class="fas fa-quote-left"></i>JThis is the second testimonial, statically defined</p>
+                                    </blockquote>                
+                                    <p class="source"><span class="name">Tim Adams</span><br /><span class="title">Curabitur commodo</span></p>                                                             
+                                </li>
                                 <div class="item" id="testimonials"></div><!--//item-->
                             </div><!--//content-->
                         </div><!--//section-inner-->                 
@@ -72,7 +73,7 @@
                 <div class="secondary col-lg-4 col-12">
                  <aside class="info aside section">
                     <div class="section-inner shadow-sm rounded">
-                        <h2 class="heading">Testimonials!</h2>
+                        <h2 class="heading">Add a Testimonial</h2>
                         <form action="/data" method="POST">
 
                             <p>Enter a testimonial</p>

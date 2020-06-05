@@ -126,3 +126,21 @@ function createTestimonialElement(text,author,title){
 
     return testimonialElementDiv;
 }
+
+function filterFunction() {
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById("filterInput");
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("testimonialUl");
+    li = ul.getElementsByTagName("li");
+    for (i = 0; i < li.length; i++) {
+        blockQuote = li[i].getElementsByTagName("blockquote")[0];
+        p = blockQuote.getElementsByTagName("p")[0];
+        txtValue = p.textContent || p.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
+}
