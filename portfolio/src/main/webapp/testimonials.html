@@ -74,22 +74,25 @@
                     <div class="section-inner shadow-sm rounded">
                         <h2 class="heading">Add a Testimonial</h2>
                         <form action="/data" method="POST">
+                            <fieldset>
+                                <legend><span class="number">1</span> Your basic info</legend>
 
-                            <p>Enter a testimonial</p>
-                            <textarea name="text"></textarea>
-                            
-                            <p>Enter your name</p>
-                            <textarea name="name"></textarea>
-                            
-                            <p> Enter your Company </p>
-                            <textarea name="company"></textarea>
+                                <label class="testimonialLabel" for="name">Name:</label>
+                                <input class="testimonialInput" type="text" id="name" name="name">
 
-                            <p> Enter your Title </p>
-                            <textarea name="title"></textarea>
-
-                            <br>
-                            <input type="submit" value="Add Testimonial" />
-                        <br>
+                                <label class="testimonialLabel" for="company">Company:</label>
+                                <input class="testimonialInput" type="text" id="company" name="company">
+                                
+                                <label class="testimonialLabel" for="title">Title:</label>
+                                <input class="testimonialInput" type="text" id="title" name="title">
+                            </fieldset>
+                            <fieldset>
+                                <legend><span class="number">2</span> Your testimonial</legend>
+                                <label for="text">Add testimonial here:</label>
+                                <textarea class="testimonialInput" id="text" name="text"></textarea>    
+                            </fieldset>
+                            <button class="testimonialButton" type="submit">Submit</button>
+                        </form>
                     </div><!--//section-inner-->
                 </aside>     
                 </div> <!--secondary-->
