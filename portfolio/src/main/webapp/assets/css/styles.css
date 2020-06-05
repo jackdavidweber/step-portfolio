@@ -592,6 +592,28 @@ a.dotted-link:hover {
   color: #49515a;
 }
 
+.testimonialList {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* W3 List Style */
+.w3-ul{
+  list-style-type:none;
+  padding:0;
+  margin:0
+}
+
+.w3-ul li {
+  padding:8px 16px;
+  border-bottom:1px solid #ddd
+}
+
+.w3-ul li:last-child {
+  border-bottom:none
+}
+
 /* Credits */
 .credits ul li {
   margin-bottom: 10px;
