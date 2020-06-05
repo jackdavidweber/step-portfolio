@@ -50,20 +50,8 @@
                         <div class="section-inner shadow-sm rounded">
                             <h2 class="heading">Testimonials</h2>
                             <div class="content">
-                                <input type="text" id="filterInput" onkeyup="filterFunction()" placeholder="Search for names.." title="Type in a name">
+                                <input type="text" id="filterInput" onkeyup="filterFunction()" placeholder="Search testimonials.." title="Type in a keyword">
                                 <ul id="testimonialUl" class="w3-ul">
-                                <li>
-                                    <blockquote class="quote">                                  
-                                        <p><i class="fas fa-quote-left"></i>This is the first testimonial statically defined</p>
-                                    </blockquote>                
-                                    <p class="source"><span class="name">Tim Adams</span><br /><span class="title">Curabitur commodo</span></p>                                                             
-                                </li>
-                                <li>
-                                    <blockquote class="quote">                                  
-                                        <p><i class="fas fa-quote-left"></i>JThis is the second testimonial, statically defined</p>
-                                    </blockquote>                
-                                    <p class="source"><span class="name">Tim Adams</span><br /><span class="title">Curabitur commodo</span></p>                                                             
-                                </li>
                                 <div class="item" id="testimonials"></div><!--//item-->
                             </div><!--//content-->
                         </div><!--//section-inner-->                 
@@ -73,6 +61,7 @@
                  <aside class="info aside section">
                     <div class="section-inner shadow-sm rounded">
                         <h2 class="heading">Add a Testimonial</h2>
+                        <!-- used https://codepen.io/edigiam/pen/WwPPOv for visual inspiration -->
                         <form action="/data" method="POST">
                             <fieldset>
                                 <legend><span class="number">1</span> Your basic info</legend>
