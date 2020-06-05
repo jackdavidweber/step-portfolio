@@ -45,15 +45,15 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
     
-    ArrayList<String> arrTestimonials = new ArrayList<>();
-    System.out.println(results.asIterable());
+    Testimonials testimonials = new Testimonials();
     for (Entity entity : results.asIterable()) {
-      String testimonial = (String) entity.getProperty("testimonial");
-      arrTestimonials.add(testimonial);
+      String text = (String) entity.getProperty("testimonial");
+      String name = (String) entity.getProperty("name");
+      String title = (String) entity.getProperty("title");
+      testimonials.addTestimonial(text, name, title);
     }
 
-    Testimonials testimonials = new Testimonials();
-    testimonials.setArrTestimonials(arrTestimonials.size() < maxTestimonials ? arrTestimonials : new ArrayList(arrTestimonials.subList(0,maxTestimonials)));
+    // testimonials.setArrTestimonials(arrTestimonials.size() < maxTestimonials ? arrTestimonials : new ArrayList(arrTestimonials.subList(0,maxTestimonials)));
 
     Gson gson = new Gson();    
     response.setContentType("application/json;");
