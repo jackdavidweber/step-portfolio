@@ -71,9 +71,6 @@ jQuery(document).ready(function($) {
 async function getTestimonials() {
   const response = await fetch('/data');
   const arrTestimonials = await response.json();
-  console.log(arrTestimonials);
-  
-//   arrTestimonials = result["arrTestimonials"];
 
   const testimonialsListElement = document.getElementById('testimonials');
   testimonialsListElement.innerHTML = '';

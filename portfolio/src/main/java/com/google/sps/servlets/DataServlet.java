@@ -66,7 +66,7 @@ public class DataServlet extends HttpServlet {
     String name = getParameter(request, "name", "");
     String company = getParameter(request, "company", "");
     String title = getParameter(request, "title", "");
-    String combinedTitle = company + ", " + title;
+    String companyNameAndTitle = company + ", " + title;
     
     long timestamp = System.currentTimeMillis();
 
@@ -75,7 +75,7 @@ public class DataServlet extends HttpServlet {
         Entity testimonialEntity = new Entity("Testimonial");
         testimonialEntity.setProperty("text", text);
         testimonialEntity.setProperty("name", name);
-        testimonialEntity.setProperty("title", combinedTitle);
+        testimonialEntity.setProperty("title", companyNameAndTitle);
         testimonialEntity.setProperty("timestamp", timestamp);
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
