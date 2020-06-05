@@ -28,27 +28,73 @@
 </head> 
 
 <body onload="getTestimonials()">
+ <!-- ******HEADER****** --> 
+    <header class="header">
+        <div class="container clearfix">                       
+            <img
+                class="profile-image img-fluid float-left rounded-circle" 
+                style="width:200px;height:200px;" src="assets/images/headshot.jpg" 
+                alt="profile image" />
+            <div class="profile-content float-left">
+                <h1 class="name">Jack Weber Testimonials</h1>
+                <h2 class="desc">Google Step Intern</h2>   
+                <ul class="social list-inline">
+                    <li class="list-inline-item">
+                        <a href="https://www.linkedin.com/in/jackdavidweber">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="https://github.com/jackdavidweber">
+                            <i class="fab fa-github-alt"></i>
+                        </a>
+                    </li>    
+                </ul> 
+            </div><!--//profile-->
+            <a class="btn btn-cta-primary float-right" href="mailto:jackweber@google.com" target="_blank">
+                <i class="fas fa-paper-plane"></i>
+                 Contact Me
+            </a>              
+        </div><!--//container-->
+    </header><!--//header-->
+    <div class="container sections-wrapper">
+            <div class="row">
+                <div class="primary col-lg-8 col-12">
+                    <section class="about section">
+                        <div class="section-inner shadow-sm rounded">
+                            <h2 class="heading">Testimonials</h2>
+                            <div class="content">
+                                <div class="item" id="testimonials"></div><!--//item-->
+                            </div><!--//content-->
+                        </div><!--//section-inner-->                 
+                    </section><!--//section-->
+                </div><!-- primary-->
+                <div class="secondary col-lg-4 col-12">
+                 <aside class="info aside section">
+                    <div class="section-inner shadow-sm rounded">
+                        <h2 class="heading">Testimonials!</h2>
+                        <form action="/data" method="POST">
 
-    <div class="section-inner shadow-sm rounded">
-        <h2 class="heading">Testimonials!</h2>
-        <form action="/data" method="POST">
+                            <p>Enter a testimonial</p>
+                            <textarea name="text"></textarea>
+                            
+                            <p>Enter your name</p>
+                            <textarea name="name"></textarea>
+                            
+                            <p> Enter your Company </p>
+                            <textarea name="company"></textarea>
 
-            <p>Enter a testimonial</p>
-            <textarea name="text"></textarea>
-            
-            <p>Enter your name</p>
-            <textarea name="name"></textarea>
-            
-            <p> Enter your Company </p>
-            <textarea name="company"></textarea>
+                            <p> Enter your Title </p>
+                            <textarea name="title"></textarea>
 
-            <p> Enter your Title </p>
-            <textarea name="title"></textarea>
-
-            <br>
-            <input type="submit" value="Add Testimonial" />
-        <br>
-    </div><!--//section-inner-->
+                            <br>
+                            <input type="submit" value="Add Testimonial" />
+                        <br>
+                    </div><!--//section-inner-->
+                </aside>     
+                </div> <!--secondary-->
+            </div> <!--row-->
+        </div> <!--section-->
 
     <!-- custom js -->
     <script type="text/javascript" src="assets/js/main.js"></script>            
