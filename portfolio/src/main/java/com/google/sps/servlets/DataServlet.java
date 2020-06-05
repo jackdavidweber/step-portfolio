@@ -45,32 +45,37 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
     
-    ArrayList<String> arrTestimonials = new ArrayList<>();
-    System.out.println(results.asIterable());
+    ArrayList<Testimonial> arrTestimonials = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
-      String testimonial = (String) entity.getProperty("testimonial");
-      arrTestimonials.add(testimonial);
+      String text = (String) entity.getProperty("text");
+      String name = (String) entity.getProperty("name");
+      String title = (String) entity.getProperty("title");
+      Testimonial newTestimonial = new Testimonial(text, name, title);
+      arrTestimonials.add(newTestimonial);
     }
-
-    Testimonials testimonials = new Testimonials();
-    testimonials.setArrTestimonials(arrTestimonials.size() < maxTestimonials ? arrTestimonials : new ArrayList(arrTestimonials.subList(0,maxTestimonials)));
 
     Gson gson = new Gson();    
     response.setContentType("application/json;");
-    response.getWriter().println(gson.toJson(testimonials));
+    response.getWriter().println(gson.toJson(arrTestimonials));
   }
 
 @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get the input from the form.
-    String text = getParameter(request, "userTestimonial", "");
+    String text = getParameter(request, "text", "");
+    String name = getParameter(request, "name", "");
+    String company = getParameter(request, "company", "");
+    String title = getParameter(request, "title", "");
+    String companyNameAndTitle = company + ", " + title;
+    
     long timestamp = System.currentTimeMillis();
-    maxTestimonials = getMaxTestimonialsChoice(request);
 
     // prevents blank testimonials from being added
     if (text.length() > 0){
         Entity testimonialEntity = new Entity("Testimonial");
-        testimonialEntity.setProperty("testimonial", text);
+        testimonialEntity.setProperty("text", text);
+        testimonialEntity.setProperty("name", name);
+        testimonialEntity.setProperty("title", companyNameAndTitle);
         testimonialEntity.setProperty("timestamp", timestamp);
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -79,28 +84,6 @@ public class DataServlet extends HttpServlet {
     response.sendRedirect("/index.html");
   }
 
-
-  /**  Returns the choice entered by the user, or -1 if the choice was invalid. */
-  private int getMaxTestimonialsChoice(HttpServletRequest request) {
-    String testimonialChoiceString = request.getParameter("max-testimonials");
-
-    // Convert the input to an int.
-    int testimonialChoice;
-    try {
-      testimonialChoice = Integer.parseInt(testimonialChoiceString);
-    } catch (NumberFormatException e) {
-      System.err.println("Could not convert to int: " + testimonialChoiceString);
-      return maxTestimonials;
-    }
-
-    // Check that the input is greater than 1.
-    if (testimonialChoice < 1) {
-      System.err.println("User choice is out of range: " + testimonialChoiceString);
-      return maxTestimonials;
-    }
-
-    return testimonialChoice;
-    }
 
   /**
    * @return the request parameter, or the default value if the parameter

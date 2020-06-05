@@ -70,19 +70,14 @@ jQuery(document).ready(function($) {
 
 async function getTestimonials() {
   const response = await fetch('/data');
-  const result = await response.json();
-  
-  arrTestimonials = result["arrTestimonials"];
+  const arrTestimonials = await response.json();
 
   const testimonialsListElement = document.getElementById('testimonials');
   testimonialsListElement.innerHTML = '';
 
   for (let i = 0; i < arrTestimonials.length; i++) {
-      testimonialsListElement.appendChild(createTestimonialElement(arrTestimonials[i], "authorName", "titleName"));
+      testimonialsListElement.appendChild(createTestimonialElement(arrTestimonials[i]["text"], arrTestimonials[i]["name"], arrTestimonials[i]["title"]));
   }
-
-  const numTestimonialsElement = document.getElementById('numTestimonials');
-  numTestimonialsElement.innerHTML = "<p>Number of Testimonials Visible: "+ arrTestimonials.length.toString() + "</p>"
 }
 
 /** Creates an <li> element containing text. */
