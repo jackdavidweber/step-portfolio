@@ -70,15 +70,16 @@ jQuery(document).ready(function($) {
 
 async function getTestimonials() {
   const response = await fetch('/data');
-  const result = await response.json();
+  const arrTestimonials = await response.json();
+  console.log(arrTestimonials);
   
-  arrTestimonials = result["arrTestimonials"];
+//   arrTestimonials = result["arrTestimonials"];
 
   const testimonialsListElement = document.getElementById('testimonials');
   testimonialsListElement.innerHTML = '';
 
   for (let i = 0; i < arrTestimonials.length; i++) {
-      testimonialsListElement.appendChild(createTestimonialElement(arrTestimonials[i], "authorName", "titleName"));
+      testimonialsListElement.appendChild(createTestimonialElement(arrTestimonials[i]["text"], arrTestimonials[i]["name"], arrTestimonials[i]["title"]));
   }
 }
 
