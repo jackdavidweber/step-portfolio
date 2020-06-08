@@ -67,12 +67,10 @@ function filterFunction() {
 
 function startListening(){
     annyang.resume();
-    console.log("mouse down");
 }
 
 function stopListening(){
     annyang.pause();
-    console.log("mouse up");
 }
 
 function initializeVoiceControl(){
@@ -90,19 +88,31 @@ function initializeVoiceControl(){
 
         }
 
-        // Let's define our first command. First the text we expect, and then the function it should call
+        // Define commands using wildcard notation
         var commands = {
             '*spoken': typeThis
         };
 
-        annyang.debug();
 
-        // Add our commands to annyang
+        // Add  commands to annyang
         annyang.addCommands(commands);
 
-        // Start listening. You can call this here, or attach this call to an event, button, etc.
+        // this initializes annyang but does not start truly listening until it is unpaused
         annyang.start({paused: true});
+
+        // only want voice button to appear if annyang is working
+        renderVoiceButton();
     }
+}
+
+function renderVoiceButton(){
+    const voiceDiv = document.getElementById("voiceButton");
+    const buttonElement = document.createElement('button');
+    buttonElement.setAttribute("type", "button");
+    buttonElement.setAttribute("onmousedown", "startListening()");
+    buttonElement.setAttribute("onmouseup","stopListening()");
+    buttonElement.appendChild(document.createTextNode("Voice to Text"));
+    voiceDiv.appendChild(buttonElement);
 }
 
 function pageLoad(){
