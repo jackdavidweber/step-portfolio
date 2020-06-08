@@ -78,12 +78,19 @@ function stopListening(){
 function initializeVoiceControl(){
     if (annyang) {
         var typeThis = function(spoken){
-            const textElement = document.getElementById('text');
+            // OPTION A Works when going back and forth between typing and voice
+            var textElement = document.getElementById('text');
+            textElement.textContent += spoken;
+            textElement.value += spoken;
             
-            const newText = document.createTextNode(spoken);
-            textElement.appendChild(" " + newText);
+            // OPTION B Stops working when user types anything into textbox 
+                // const textElement = document.getElementById('text');            
+                // const newText = document.createTextNode(" " + spoken);
+                // textElement.appendChild(newText);
+
         }
 
+        // Let's define our first command. First the text we expect, and then the function it should call
         var commands = {
             '*spoken': typeThis
         };
