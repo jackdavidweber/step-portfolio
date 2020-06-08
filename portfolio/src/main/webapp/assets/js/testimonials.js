@@ -75,14 +75,14 @@ function stopListening(){
 
 function initializeVoiceControl(){
     if (annyang) {
-        var typeThis = function(spoken){
+        const typeThis = function(spoken){
             // OPTION A Works when going back and forth between typing and voice
-            var textElement = document.getElementById('text');
+            let textElement = document.getElementById('text');
             textElement.value += spoken;
         }
 
         // Define commands using wildcard notation
-        var commands = {
+        const commands = {
             '*spoken': typeThis
         };
 
@@ -107,7 +107,7 @@ function renderVoiceButton(){
     voiceDiv.appendChild(buttonElement);
 }
 
-function pageLoad(){
+function onPageLoad(){
     getTestimonials();
     initializeVoiceControl();
 }
