@@ -78,21 +78,13 @@ function initializeVoiceControl(){
         var typeThis = function(spoken){
             // OPTION A Works when going back and forth between typing and voice
             var textElement = document.getElementById('text');
-            textElement.textContent += spoken;
             textElement.value += spoken;
-            
-            // OPTION B Stops working when user types anything into textbox 
-                // const textElement = document.getElementById('text');            
-                // const newText = document.createTextNode(" " + spoken);
-                // textElement.appendChild(newText);
-
         }
 
         // Define commands using wildcard notation
         var commands = {
             '*spoken': typeThis
         };
-
 
         // Add  commands to annyang
         annyang.addCommands(commands);
