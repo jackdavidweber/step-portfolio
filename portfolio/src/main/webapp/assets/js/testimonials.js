@@ -79,32 +79,14 @@ function initializeVoiceControl(){
     if (annyang) {
         var typeThis = function(spoken){
             const textElement = document.getElementById('text');
-            const prevText = textElement.innerText;
             
             const newText = document.createTextNode(spoken);
-            textElement.appendChild(newText + " ");
-            console.log(spoken);
+            textElement.appendChild(" " + newText);
         }
 
-            //'hello': function() {
-            //const textElement = document.getElementById('text');
-            //const textFromSpeech = document.createTextNode(text);
-
-            //console.log("hello there");
-            
-
-        // Let's define our first command. First the text we expect, and then the function it should call
         var commands = {
             '*spoken': typeThis
         };
-
-        
-        // annyang.addCallback('resultMatch', function(userSaid, commandText, phrases) {
-        // console.log(userSaid); // sample output: 'hello'
-        // console.log(commandText); // sample output: 'hello (there)'
-        // console.log(phrases); // sample output: ['hello', 'halo', 'yellow', 'polo', 'hello kitty']
-        // });
-
 
         annyang.debug();
 
