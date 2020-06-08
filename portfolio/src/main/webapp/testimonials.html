@@ -24,31 +24,69 @@
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>
 
-
 </head> 
 
 <body onload="getTestimonials()">
+ <!-- ******HEADER****** --> 
+    <header class="header">
+        <div class="container clearfix">                       
+            <img
+                class="profile-image img-fluid float-left rounded-circle" 
+                style="width:200px;height:200px;" src="assets/images/headshot.jpg" 
+                alt="profile image" />
+            <div class="profile-content float-left">
+                <h1 class="name">Jack Weber Testimonials</h1>
+            </div><!--//profile-->
+            <a class="btn btn-cta-primary float-right" href="index.html" target="_blank">
+                <i class="fa fa-home"></i>
+                 Return to Portfolio
+            </a>              
+        </div><!--//container-->
+    </header><!--//header-->
+    <div class="container sections-wrapper">
+            <div class="row">
+                <div class="primary col-lg-8 col-12">
+                    <section class="testimonials aside section">
+                        <div class="section-inner shadow-sm rounded">
+                            <h2 class="heading">Testimonials</h2>
+                            <div class="content">
+                                <input type="text" id="filterInput" onkeyup="filterFunction()" placeholder="Search testimonials.." title="Type in a keyword">
+                                <ul id="testimonialUl" class="w3-ul">
+                                <div class="item" id="testimonials"></div><!--//item-->
+                            </div><!--//content-->
+                        </div><!--//section-inner-->                 
+                    </section><!--//section-->
+                </div><!-- primary-->
+                <div class="secondary col-lg-4 col-12">
+                 <aside class="info aside section">
+                    <div class="section-inner shadow-sm rounded">
+                        <h2 class="heading">Add a Testimonial</h2>
+                        <!-- used https://codepen.io/edigiam/pen/WwPPOv for visual inspiration -->
+                        <form action="/data" method="POST">
+                            <fieldset>
+                                <legend><span class="number">1</span> Your basic info</legend>
 
-    <div class="section-inner shadow-sm rounded">
-        <h2 class="heading">Testimonials!</h2>
-        <form action="/data" method="POST">
+                                <label class="testimonial-label" for="name">Name:</label>
+                                <input class="testimonial-input" type="text" id="name" name="name">
 
-            <p>Enter a testimonial</p>
-            <textarea name="text"></textarea>
-            
-            <p>Enter your name</p>
-            <textarea name="name"></textarea>
-            
-            <p> Enter your Company </p>
-            <textarea name="company"></textarea>
-
-            <p> Enter your Title </p>
-            <textarea name="title"></textarea>
-
-            <br>
-            <input type="submit" value="Add Testimonial" />
-        <br>
-    </div><!--//section-inner-->
+                                <label class="testimonial-label" for="company">Company:</label>
+                                <input class="testimonial-input" type="text" id="company" name="company">
+                                
+                                <label class="testimonial-label" for="title">Title:</label>
+                                <input class="testimonial-input" type="text" id="title" name="title">
+                            </fieldset>
+                            <fieldset>
+                                <legend><span class="number">2</span> Your testimonial</legend>
+                                <label for="text">Add testimonial here:</label>
+                                <textarea class="testimonial-input" id="text" name="text"></textarea>    
+                            </fieldset>
+                            <button class="testimonial-button" type="submit">Submit</button>
+                        </form>
+                    </div><!--//section-inner-->
+                </aside>     
+                </div> <!--secondary-->
+            </div> <!--row-->
+        </div> <!--section-->
 
     <!-- custom js -->
     <script type="text/javascript" src="assets/js/main.js"></script>            
