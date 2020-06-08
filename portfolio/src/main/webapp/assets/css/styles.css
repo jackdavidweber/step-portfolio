@@ -592,12 +592,6 @@ a.dotted-link:hover {
   color: #49515a;
 }
 
-.testimonialList {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
 /* W3 List Style */
 .w3-ul{
   list-style-type:none;
@@ -613,15 +607,6 @@ a.dotted-link:hover {
 .w3-ul li:last-child {
   border-bottom:none
 }
-
-/* Testimonial Form */
-/* form {
-  max-width: 300px;
-  margin: 10px auto;
-  padding: 10px 20px;
-  background: #f4f7f8;
-  border-radius: 8px;
-} */
 
 fieldset {
   margin-bottom: 30px;
@@ -642,7 +627,7 @@ fieldset {
   border-radius: 100%;
 }
 
-.testimonialLabel {
+.testimonial-label {
   display: block;
   margin-bottom: 8px;
 }
@@ -652,7 +637,7 @@ legend {
   margin-bottom: 10px;
 }
 
-.testimonialInput {
+.testimonial-input {
   background: rgba(255, 255, 255, 0.1);
   border: none;
   font-size: 16px;
@@ -667,7 +652,7 @@ legend {
   margin-bottom: 30px;
 }
 
-.testimonialButton {
+.testimonial-button {
   padding: 19px 39px 18px 39px;
   color: #FFF;
   background-color: #54ba4e;
@@ -683,7 +668,7 @@ legend {
 }
 
 /* FIXME: hover color change doesn't work*/
-.testimonialButton:hover {
+.testimonial-button:hover {
   background-color: #54ba4e;
 }
 
