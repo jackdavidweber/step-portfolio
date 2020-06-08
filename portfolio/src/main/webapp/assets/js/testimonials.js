@@ -78,6 +78,11 @@ function stopListening(){
 function initializeVoiceControl(){
     if (annyang) {
         var typeThis = function(spoken){
+            const textElement = document.getElementById('text');
+            const prevText = textElement.innerText;
+            
+            const newText = document.createTextNode(spoken);
+            textElement.appendChild(newText + " ");
             console.log(spoken);
         }
 
