@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Bootstrap 4 Portfolio/Resume Theme for Developers">
     <meta name="author" content="Xiaoying Riley at 3rd Wave Media">    
-    <link rel="shortcut icon" href="favicon.ico">  
     
     <link href='https://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'> 
@@ -24,9 +23,13 @@
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>
 
+    <!-- Voice Control -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
+
+
 </head> 
 
-<body onload="getTestimonials()">
+<body onload="OnPageLoad()">
  <!-- ******HEADER****** --> 
     <header class="header">
         <div class="container clearfix">                       
@@ -78,7 +81,8 @@
                             <fieldset>
                                 <legend><span class="number">2</span> Your testimonial</legend>
                                 <label for="text">Add testimonial here:</label>
-                                <textarea class="testimonial-input" id="text" name="text"></textarea>    
+                                <div id="voiceButton"></div>
+                                <textarea class="testimonial-input" id="text" name="text"></textarea>  
                             </fieldset>
                             <button class="testimonial-button" type="submit">Submit</button>
                         </form>
@@ -89,7 +93,7 @@
         </div> <!--section-->
 
     <!-- custom js -->
-    <script type="text/javascript" src="assets/js/main.js"></script>            
+    <script type="text/javascript" src="assets/js/testimonials.js"></script>            
 
 </body>
 </html> 
