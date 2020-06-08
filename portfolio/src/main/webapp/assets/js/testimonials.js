@@ -64,3 +64,54 @@ function filterFunction() {
         }
     }
 }
+
+function startListening(){
+    annyang.resume();
+    console.log("mouse down");
+}
+
+function stopListening(){
+    annyang.pause();
+    console.log("mouse up");
+}
+
+function initializeVoiceControl(){
+    if (annyang) {
+        var typeThis = function(spoken){
+            console.log(spoken);
+        }
+
+            //'hello': function() {
+            //const textElement = document.getElementById('text');
+            //const textFromSpeech = document.createTextNode(text);
+
+            //console.log("hello there");
+            
+
+        // Let's define our first command. First the text we expect, and then the function it should call
+        var commands = {
+            '*spoken': typeThis
+        };
+
+        
+        // annyang.addCallback('resultMatch', function(userSaid, commandText, phrases) {
+        // console.log(userSaid); // sample output: 'hello'
+        // console.log(commandText); // sample output: 'hello (there)'
+        // console.log(phrases); // sample output: ['hello', 'halo', 'yellow', 'polo', 'hello kitty']
+        // });
+
+
+        annyang.debug();
+
+        // Add our commands to annyang
+        annyang.addCommands(commands);
+
+        // Start listening. You can call this here, or attach this call to an event, button, etc.
+        annyang.start({paused: true});
+    }
+}
+
+function pageLoad(){
+    getTestimonials();
+    initializeVoiceControl();
+}
