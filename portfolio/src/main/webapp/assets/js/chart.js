@@ -13,7 +13,7 @@ function drawChart() {
     });
 
     const options = {
-      'title': 'Climbing Participants (in millions)',
+      'title': 'Climbing Participants',
       'width':600,
       'height':500
     };
