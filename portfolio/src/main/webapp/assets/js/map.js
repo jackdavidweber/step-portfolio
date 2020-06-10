@@ -1,4 +1,4 @@
-var markers = [
+const markers = [
     {lat: 41.725295, lng: -74.204420, title: "The Gunks", description: "Some of the best Trad Climbing on the East Coast" },
     {lat: 22.607288, lng: -83.724946, title: "Vinales", description: "Although not recognized by the government, Cuban climbing is alive and thriving" }, // vinales
     {lat: 35.668170, lng: -91.724883, title: "Jamestown Crag", description: "Stopped here for some sport climbs on the drive from LA to NY"},
@@ -14,7 +14,7 @@ function createMap() {
       document.getElementById('map'),
       {center: {lat: 39.50, lng: -98.35}, zoom: 3});
 
-  for (i=0; i<markers.length; i++){
+  for (let i=0; i<markers.length; i++){
       addLandmark(map, markers[i]['lat'], markers[i]['lng'], markers[i]['title'], markers[i]['description'] );
   }
 }
