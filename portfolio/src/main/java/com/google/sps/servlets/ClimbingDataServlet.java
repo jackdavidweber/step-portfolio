@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/climbing-data")
 public class ClimbingDataServlet extends HttpServlet {
 
-  private LinkedHashMap<Integer, Integer> climbingParticipation = new LinkedHashMap<>();
+  private LinkedHashMap<Integer, Integer> climbingParticipationByYear = new LinkedHashMap<>();
 
   @Override
   public void init() {
@@ -26,7 +26,7 @@ public class ClimbingDataServlet extends HttpServlet {
       Integer year = Integer.valueOf(cells[0]);
       Integer sightings = Integer.valueOf(cells[1]);
 
-      climbingParticipation.put(year, sightings);
+      climbingParticipationByYear.put(year, sightings);
     }
     scanner.close();
   }
@@ -35,7 +35,7 @@ public class ClimbingDataServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("application/json");
     Gson gson = new Gson();
-    String json = gson.toJson(climbingParticipation);
+    String json = gson.toJson(climbingParticipationByYear);
     response.getWriter().println(json);
   }
 }
