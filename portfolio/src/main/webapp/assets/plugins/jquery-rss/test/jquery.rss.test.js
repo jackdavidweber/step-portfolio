@@ -13,21 +13,21 @@ describe("jquery.rss", () => {
   let $, element, originalAjax;
 
   const feedUrl = "https://www.contentful.com/blog/feed.xml";
-  const fakeGetJson = content => {
+  const fakeGetJson = (content) => {
     originalAjax = $.ajax;
 
-    $.ajax = function({ url, success }) {
+    $.ajax = function ({ url, success }) {
       success({
         responseData: {
           feed: {
             entries: [
               {
                 content: content,
-                contentSnippet: content
-              }
-            ]
-          }
-        }
+                contentSnippet: content,
+              },
+            ],
+          },
+        },
       });
     };
   };
@@ -53,13 +53,13 @@ describe("jquery.rss", () => {
     }
   });
 
-  it("supports multiple rss feeds", done => {
+  it("supports multiple rss feeds", (done) => {
     originalAjax = $.ajax;
-    $.ajax = function({ url, success }) {
+    $.ajax = function ({ url, success }) {
       expect(url).to.include(
         "q=https%3A%2F%2Fwww.contentful.com%2Fblog%2Ffeed.xml,http%3A%2F%2Fwww.ebaytechblog.com%2Ffeed%2F"
       );
-      
+
       done();
     };
 
@@ -67,14 +67,14 @@ describe("jquery.rss", () => {
 
     $container.rss([
       "https://www.contentful.com/blog/feed.xml",
-      "http://www.ebaytechblog.com/feed/"
+      "http://www.ebaytechblog.com/feed/",
     ]);
   });
 
-  it("renders an unordered list by default", function(done) {
+  it("renders an unordered list by default", function (done) {
     var $container = element;
 
-    $container.rss(feedUrl, {}, function() {
+    $container.rss(feedUrl, {}, function () {
       var renderedContent = $container.html().replace(/\n/g, "");
 
       expect(renderedContent).to.match(/<ul>.*<\/ul>/);
@@ -82,35 +82,35 @@ describe("jquery.rss", () => {
     });
   });
 
-  it("renders 2 list entries if limit is set to 2", function(done) {
+  it("renders 2 list entries if limit is set to 2", function (done) {
     var $container = element;
 
     $container.rss(
       feedUrl,
       {
-        limit: 2
+        limit: 2,
       },
-      function() {
+      function () {
         expect($("li", $container).length).to.equal(2);
         done();
       }
     );
   });
 
-  it("renders the defined entry template", function(done) {
+  it("renders the defined entry template", function (done) {
     var $container = element;
 
     $container.rss(
       feedUrl,
       {
         limit: 1,
-        entryTemplate: "<li>foo</li>"
+        entryTemplate: "<li>foo</li>",
       },
-      function() {
+      function () {
         var renderedContent = $container
           .html()
           .split("\n")
-          .map(function(s) {
+          .map(function (s) {
             return s.trim();
           })
           .join("")
@@ -122,16 +122,16 @@ describe("jquery.rss", () => {
     );
   });
 
-  it("renders the defined layout template", function(done) {
+  it("renders the defined layout template", function (done) {
     var $container = element;
 
     $container.rss(
       feedUrl,
       {
         limit: 1,
-        layoutTemplate: "foo<ul>{entries}</ul>bar"
+        layoutTemplate: "foo<ul>{entries}</ul>bar",
       },
-      function() {
+      function () {
         var renderedContent = $container.html().replace(/\n/g, "");
 
         expect(renderedContent).to.match(/foo<ul>.*<\/ul>/);
@@ -140,7 +140,7 @@ describe("jquery.rss", () => {
     );
   });
 
-  it("supports custom tokens", function(done) {
+  it("supports custom tokens", function (done) {
     var $container = element;
 
     $container.rss(
@@ -150,16 +150,16 @@ describe("jquery.rss", () => {
         entryTemplate: "<li>{myCustomStaticToken} {myCustomDynamicToken}</li>",
         tokens: {
           myCustomStaticToken: "static",
-          myCustomDynamicToken: function() {
+          myCustomDynamicToken: function () {
             return "dynamic";
-          }
-        }
+          },
+        },
       },
-      function() {
+      function () {
         var renderedContent = $container
           .html()
           .split("\n")
-          .map(function(s) {
+          .map(function (s) {
             return s.trim();
           })
           .join("")
@@ -173,7 +173,7 @@ describe("jquery.rss", () => {
     );
   });
 
-  it("removes p-tags but not the content", function(done) {
+  it("removes p-tags but not the content", function (done) {
     var $container = element;
 
     fakeGetJson("<p>May the fourth be with you!</p>");
@@ -182,13 +182,13 @@ describe("jquery.rss", () => {
       feedUrl,
       {
         limit: 1,
-        entryTemplate: "<li>{bodyPlain}</li>"
+        entryTemplate: "<li>{bodyPlain}</li>",
       },
-      function() {
+      function () {
         var renderedContent = $container
           .html()
           .split("\n")
-          .map(function(s) {
+          .map(function (s) {
             return s.trim();
           })
           .join("")
@@ -200,26 +200,26 @@ describe("jquery.rss", () => {
     );
   });
 
-  it("calls the error callback if something went wrong", function(done) {
+  it("calls the error callback if something went wrong", function (done) {
     element.rss("https://google.com", {
-      error: function() {
+      error: function () {
         expect(1).to.equal(1);
         done();
-      }
+      },
     });
   });
 
-  it("calls the success callback", function(done) {
+  it("calls the success callback", function (done) {
     element.rss(feedUrl, {
       limit: 1,
-      success: function() {
+      success: function () {
         expect(1).to.equal(1);
         done();
-      }
+      },
     });
   });
 
-  it("renders the defined entry template in the layout template", function(done) {
+  it("renders the defined entry template in the layout template", function (done) {
     var $container = element;
 
     $container.rss(
@@ -227,9 +227,9 @@ describe("jquery.rss", () => {
       {
         limit: 1,
         entryTemplate: "<li>bazinga</li>",
-        layoutTemplate: "<ul><li>topic</li>{entries}</ul>"
+        layoutTemplate: "<ul><li>topic</li>{entries}</ul>",
       },
-      function() {
+      function () {
         var renderedContent = $container.html().replace(/\n/g, "");
 
         expect(renderedContent).to.equal(
@@ -240,7 +240,7 @@ describe("jquery.rss", () => {
     );
   });
 
-  it("renders when layout template only contains the entries token", function(done) {
+  it("renders when layout template only contains the entries token", function (done) {
     var $container = $("<table>").appendTo(element);
 
     $container.rss(
@@ -248,9 +248,9 @@ describe("jquery.rss", () => {
       {
         limit: 1,
         layoutTemplate: "{entries}",
-        entryTemplate: "<tr><td>{title}</td></tr>"
+        entryTemplate: "<tr><td>{title}</td></tr>",
       },
-      function() {
+      function () {
         var renderedContent = $container[0].outerHTML.replace(/\n/g, "");
 
         expect(renderedContent).to.match(

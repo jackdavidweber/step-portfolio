@@ -1,19 +1,19 @@
 import RSS from "vanilla-rss";
 
-(function($) {
-  $.fn.rss = function(url, options = {}, callback) {
+(function ($) {
+  $.fn.rss = function (url, options = {}, callback) {
     const rss = new RSS(this, url, {
       ...options,
-      fetchFeed: apiUrl => {
+      fetchFeed: (apiUrl) => {
         return new Promise((resolve, reject) => {
           $.ajax({
             dataType: "json",
             url: apiUrl,
             success: resolve,
-            error: reject
+            error: reject,
           });
         });
-      }
+      },
     });
 
     rss.render().then(

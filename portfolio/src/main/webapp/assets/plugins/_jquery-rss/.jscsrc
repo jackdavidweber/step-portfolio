@@ -21,7 +21,13 @@
   "requireCurlyBraces": ["if", "else", "for", "while", "do", "try", "catch"],
   "requireLineFeedAtFileEnd": true,
   "requirePaddingNewlinesBeforeKeywords": [
-    "do","for","if","switch","try","while","with"
+    "do",
+    "for",
+    "if",
+    "switch",
+    "try",
+    "while",
+    "with"
   ],
   "requireParenthesesAroundIIFE": true,
   "requireSpaceAfterBinaryOperators": true,
@@ -29,9 +35,7 @@
   "requireSpaceAfterLineComment": true,
   "requireSpaceBeforeBinaryOperators": true,
   "requireSpaceBeforeBlockStatements": true,
-  "requireSpaceBeforeKeywords": [
-    "else", "while", "catch"
-  ],
+  "requireSpaceBeforeKeywords": ["else", "while", "catch"],
   "requireSpaceBetweenArguments": true,
   "requireSpaceBeforeObjectValues": true,
   "requireSpacesInConditionalExpression": {

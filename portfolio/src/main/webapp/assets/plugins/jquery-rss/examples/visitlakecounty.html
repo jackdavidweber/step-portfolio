@@ -8,12 +8,15 @@
     <script src="../dist/jquery.rss.min.js"></script>
 
     <script>
-      jQuery(function($) {
-        $("#rss-feeds").rss("https://www.visitlakecounty.org/rss/visitlakecounty_boating_events.xml", {
-          entryTemplate: '<li>[{date}] {title}</li>',
-          dateFormat: "M/D/YY"
-        })
-      })
+      jQuery(function ($) {
+        $("#rss-feeds").rss(
+          "https://www.visitlakecounty.org/rss/visitlakecounty_boating_events.xml",
+          {
+            entryTemplate: "<li>[{date}] {title}</li>",
+            dateFormat: "M/D/YY",
+          }
+        );
+      });
     </script>
   </head>
   <body>

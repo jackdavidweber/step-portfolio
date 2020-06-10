@@ -153,7 +153,7 @@ There are some predefined tokens:
 - totalEntries: the total count of the entries
 - feed: contains high level information of the feed (e.g. title of the website)
 
-You can also define custom tokens using the ```tokens``` option:
+You can also define custom tokens using the `tokens` option:
 
     $('#foo').rss(url, {
       entryTemplate: "{dynamic}, {static}, {re-use}",
@@ -204,5 +204,4 @@ If that is installed you only have to run `npm test`.
 
 - DaWanda GmbH ([Website](http://dawanda.com))
 - Sascha Depold ([Twitter](http://twitter.com/sdepold) | [Github](http://github.com/sdepold) | [Website](http://depold.com))
-- Steffen Schröder  ([Twitter](http://twitter.com/ChaosSteffen) | [Github](http://github.com/ChaosSteffen) | [Website](http://schroeder-blog.de))
-
+- Steffen Schröder ([Twitter](http://twitter.com/ChaosSteffen) | [Github](http://github.com/ChaosSteffen) | [Website](http://schroeder-blog.de))

@@ -13,21 +13,21 @@
     <script src="../dist/jquery.rss.min.js"></script>
 
     <script>
-      jQuery(function($) {
+      jQuery(function ($) {
         $("#rss-feeds").rss(
           [
             "https://www.contentful.com/blog/feed.xml",
-            "http://www.ebaytechblog.com/feed/"
+            "http://www.ebaytechblog.com/feed/",
           ],
           {
             layoutTemplate: "{entries}",
             entryTemplate:
               "<div class='entry'><h3>{title}</h3><div><p>{bodyPlain}</p></div></div>",
-            success: function() {
-              $(".entry").each(function(i, entry) {
+            success: function () {
+              $(".entry").each(function (i, entry) {
                 $(entry).slideDown();
               });
-            }
+            },
           }
         );
       });

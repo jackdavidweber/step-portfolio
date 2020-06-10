@@ -1,54 +1,152 @@
 (function ($) {
-  'use strict';
+  "use strict";
 
   var RSS = function (target, url, options, callback) {
-    this.target       = target;
+    this.target = target;
 
-    this.url          = url;
-    this.html         = [];
-    this.effectQueue  = [];
+    this.url = url;
+    this.html = [];
+    this.effectQueue = [];
 
-    this.options = $.extend({
-      ssl: false,
-      host: 'www.feedrapp.info',
-      limit: null,
-      key: null,
-      layoutTemplate: '<ul>{entries}</ul>',
-      entryTemplate: '<li><a href="{url}">[{author}@{date}] {title}</a><br/>{shortBodyPlain}</li>',
-      tokens: {},
-      outputMode: 'json',
-      dateFormat: 'dddd MMM Do',
-      dateLocale: 'en',
-      effect: 'show',
-      offsetStart: false,
-      offsetEnd: false,
-      error: function () {
-        console.log('jQuery RSS: url doesn\'t link to RSS-Feed');
+    this.options = $.extend(
+      {
+        ssl: false,
+        host: "www.feedrapp.info",
+        limit: null,
+        key: null,
+        layoutTemplate: "<ul>{entries}</ul>",
+        entryTemplate:
+          '<li><a href="{url}">[{author}@{date}] {title}</a><br/>{shortBodyPlain}</li>',
+        tokens: {},
+        outputMode: "json",
+        dateFormat: "dddd MMM Do",
+        dateLocale: "en",
+        effect: "show",
+        offsetStart: false,
+        offsetEnd: false,
+        error: function () {
+          console.log("jQuery RSS: url doesn't link to RSS-Feed");
+        },
+        onData: function () {},
+        success: function () {},
       },
-      onData: function () {},
-      success: function () {}
-    }, options || {});
+      options || {}
+    );
 
     this.callback = callback || this.options.success;
   };
 
   RSS.htmlTags = [
-    'doctype', 'html', 'head', 'title', 'base', 'link', 'meta', 'style', 'script', 'noscript',
-    'body', 'article', 'nav', 'aside', 'section', 'header', 'footer', 'h1-h6', 'hgroup', 'address',
-    'p', 'hr', 'pre', 'blockquote', 'ol', 'ul', 'li', 'dl', 'dt', 'dd', 'figure', 'figcaption',
-    'div', 'table', 'caption', 'thead', 'tbody', 'tfoot', 'tr', 'th', 'td', 'col', 'colgroup',
-    'form', 'fieldset', 'legend', 'label', 'input', 'button', 'select', 'datalist', 'optgroup',
-    'option', 'textarea', 'keygen', 'output', 'progress', 'meter', 'details', 'summary', 'command',
-    'menu', 'del', 'ins', 'img', 'iframe', 'embed', 'object', 'param', 'video', 'audio', 'source',
-    'canvas', 'track', 'map', 'area', 'a', 'em', 'strong', 'i', 'b', 'u', 's', 'small', 'abbr', 'q',
-    'cite', 'dfn', 'sub', 'sup', 'time', 'code', 'kbd', 'samp', 'var', 'mark', 'bdi', 'bdo', 'ruby',
-    'rt', 'rp', 'span', 'br', 'wbr'
+    "doctype",
+    "html",
+    "head",
+    "title",
+    "base",
+    "link",
+    "meta",
+    "style",
+    "script",
+    "noscript",
+    "body",
+    "article",
+    "nav",
+    "aside",
+    "section",
+    "header",
+    "footer",
+    "h1-h6",
+    "hgroup",
+    "address",
+    "p",
+    "hr",
+    "pre",
+    "blockquote",
+    "ol",
+    "ul",
+    "li",
+    "dl",
+    "dt",
+    "dd",
+    "figure",
+    "figcaption",
+    "div",
+    "table",
+    "caption",
+    "thead",
+    "tbody",
+    "tfoot",
+    "tr",
+    "th",
+    "td",
+    "col",
+    "colgroup",
+    "form",
+    "fieldset",
+    "legend",
+    "label",
+    "input",
+    "button",
+    "select",
+    "datalist",
+    "optgroup",
+    "option",
+    "textarea",
+    "keygen",
+    "output",
+    "progress",
+    "meter",
+    "details",
+    "summary",
+    "command",
+    "menu",
+    "del",
+    "ins",
+    "img",
+    "iframe",
+    "embed",
+    "object",
+    "param",
+    "video",
+    "audio",
+    "source",
+    "canvas",
+    "track",
+    "map",
+    "area",
+    "a",
+    "em",
+    "strong",
+    "i",
+    "b",
+    "u",
+    "s",
+    "small",
+    "abbr",
+    "q",
+    "cite",
+    "dfn",
+    "sub",
+    "sup",
+    "time",
+    "code",
+    "kbd",
+    "samp",
+    "var",
+    "mark",
+    "bdi",
+    "bdo",
+    "ruby",
+    "rt",
+    "rp",
+    "span",
+    "br",
+    "wbr",
   ];
 
   RSS.prototype.load = function (callback) {
-    var apiProtocol = 'http' + (this.options.ssl ? 's' : '');
-    var apiHost     = apiProtocol + '://' + this.options.host;
-    var apiUrl      = apiHost + '?callback=?&q=' + encodeURIComponent(this.url);
+    var apiProtocol = "http" + (this.options.ssl ? "s" : "");
+    var apiHost = apiProtocol + "://" + this.options.host;
+    var apiUrl = apiHost + "?callback=?&q=" + encodeURIComponent(this.url);
 
     // set limit to offsetEnd if offset has been set
     if (this.options.offsetStart && this.options.offsetEnd) {
@@ -56,11 +154,11 @@
     }
 
     if (this.options.limit !== null) {
-      apiUrl += '&num=' + this.options.limit;
+      apiUrl += "&num=" + this.options.limit;
     }
 
     if (this.options.key !== null) {
-      apiUrl += '&key=' + this.options.key;
+      apiUrl += "&key=" + this.options.key;
     }
 
     $.getJSON(apiUrl, callback);
@@ -71,11 +169,11 @@
 
     this.load(function (data) {
       try {
-        self.feed    = data.responseData.feed;
+        self.feed = data.responseData.feed;
         self.entries = data.responseData.feed.entries;
       } catch (e) {
         self.entries = [];
-        self.feed    = null;
+        self.feed = null;
         return self.options.error.call(self);
       }
 
@@ -88,7 +186,9 @@
           self.options.onData.call(self);
         }
 
-        var container = $(html.layout).is('entries') ? html.layout : $('entries', html.layout);
+        var container = $(html.layout).is("entries")
+          ? html.layout
+          : $("entries", html.layout);
 
         self.appendEntriesAndApplyEffects(container, html.entries);
       }
@@ -107,10 +207,10 @@
     $.each(entries, function (idx, entry) {
       var $html = self.wrapContent(entry);
 
-      if (self.options.effect === 'show') {
+      if (self.options.effect === "show") {
         target.before($html);
       } else {
-        $html.css({ display: 'none' });
+        $html.css({ display: "none" });
         target.before($html);
         self.applyEffect($html, self.options.effect);
       }
@@ -120,13 +220,13 @@
   };
 
   RSS.prototype.generateHTMLForEntries = function () {
-    var self   = this;
+    var self = this;
     var result = { entries: [], layout: null };
 
     $(this.entries).each(function () {
-      var entry       = this;
+      var entry = this;
       var offsetStart = self.options.offsetStart;
-      var offsetEnd   = self.options.offsetEnd;
+      var offsetEnd = self.options.offsetEnd;
       var evaluatedString;
 
       // offset required
@@ -134,7 +234,8 @@
         if (index >= offsetStart && index <= offsetEnd) {
           if (self.isRelevant(entry, result.entries)) {
             evaluatedString = self.evaluateStringForEntry(
-              self.options.entryTemplate, entry
+              self.options.entryTemplate,
+              entry
             );
 
             result.entries.push(evaluatedString);
@@ -144,7 +245,8 @@
         // no offset
         if (self.isRelevant(entry, result.entries)) {
           evaluatedString = self.evaluateStringForEntry(
-            self.options.entryTemplate, entry
+            self.options.entryTemplate,
+            entry
           );
 
           result.entries.push(evaluatedString);
@@ -155,20 +257,20 @@
     if (!!this.options.entryTemplate) {
       // we have an entryTemplate
       result.layout = this.wrapContent(
-        this.options.layoutTemplate.replace('{entries}', '<entries></entries>')
+        this.options.layoutTemplate.replace("{entries}", "<entries></entries>")
       );
     } else {
       // no entryTemplate available
-      result.layout = this.wrapContent('<div><entries></entries></div>');
+      result.layout = this.wrapContent("<div><entries></entries></div>");
     }
 
     return result;
   };
 
   RSS.prototype.wrapContent = function (content) {
-    if (($.trim(content).indexOf('<') !== 0)) {
+    if ($.trim(content).indexOf("<") !== 0) {
       // the content has no html => create a surrounding div
-      return $('<div>' + content + '</div>');
+      return $("<div>" + content + "</div>");
     } else {
       // the content has html => don't touch it
       return $(content);
@@ -179,17 +281,17 @@
     var self = this;
 
     switch (effect) {
-      case 'slide':
-        $element.slideDown('slow', callback);
+      case "slide":
+        $element.slideDown("slow", callback);
         break;
-      case 'slideFast':
+      case "slideFast":
         $element.slideDown(callback);
         break;
-      case 'slideSynced':
-        self.effectQueue.push({ element: $element, effect: 'slide' });
+      case "slideSynced":
+        self.effectQueue.push({ element: $element, effect: "slide" });
         break;
-      case 'slideFastSynced':
-        self.effectQueue.push({ element: $element, effect: 'slideFast' });
+      case "slideFastSynced":
+        self.effectQueue.push({ element: $element, effect: "slideFast" });
         break;
     }
   };
@@ -214,7 +316,7 @@
 
   RSS.prototype.evaluateStringForEntry = function (string, entry) {
     var result = string;
-    var self   = this;
+    var self = this;
 
     $(string.match(/(\{.*?\})/g)).each(function () {
       var token = this.toString();
@@ -229,7 +331,10 @@
     var tokenMap = this.getTokenMap(entry);
 
     if (this.options.filter) {
-      if (this.options.filterLimit && (this.options.filterLimit === entries.length)) {
+      if (
+        this.options.filterLimit &&
+        this.options.filterLimit === entries.length
+      ) {
         return false;
       } else {
         return this.options.filter(entry, tokenMap);
@@ -243,7 +348,7 @@
     // If a custom formatting function is provided, use that.
     if (this.options.dateFormatFunction) {
       return this.options.dateFormatFunction(dateString);
-    } else if (typeof moment !== 'undefined') {
+    } else if (typeof moment !== "undefined") {
       // If moment.js is available and dateFormatFunction is not overriding it,
       // use it to format the date.
       var date = moment(new Date(dateString));
@@ -269,60 +374,66 @@
       this.feedTokens = feed;
     }
 
-    return $.extend({
-      feed:      this.feedTokens,
-      url:       entry.link,
-      author:    entry.author,
-      date:      this.getFormattedDate(entry.publishedDate),
-      title:     entry.title,
-      body:      entry.content,
-      shortBody: entry.contentSnippet,
+    return $.extend(
+      {
+        feed: this.feedTokens,
+        url: entry.link,
+        author: entry.author,
+        date: this.getFormattedDate(entry.publishedDate),
+        title: entry.title,
+        body: entry.content,
+        shortBody: entry.contentSnippet,
 
-      bodyPlain: (function (entry) {
-        var result = entry.content
-          .replace(/<script[\\r\\\s\S]*<\/script>/mgi, '')
-          .replace(/<\/?[^>]+>/gi, '');
+        bodyPlain: (function (entry) {
+          var result = entry.content
+            .replace(/<script[\\r\\\s\S]*<\/script>/gim, "")
+            .replace(/<\/?[^>]+>/gi, "");
 
-        for (var i = 0; i < RSS.htmlTags.length; i++) {
-          result = result.replace(new RegExp('<' + RSS.htmlTags[i], 'gi'), '');
-        }
+          for (var i = 0; i < RSS.htmlTags.length; i++) {
+            result = result.replace(
+              new RegExp("<" + RSS.htmlTags[i], "gi"),
+              ""
+            );
+          }
 
-        return result;
-      })(entry),
+          return result;
+        })(entry),
 
-      shortBodyPlain: entry.contentSnippet.replace(/<\/?[^>]+>/gi, ''),
-      index:          $.inArray(entry, this.entries),
-      totalEntries:   this.entries.length,
+        shortBodyPlain: entry.contentSnippet.replace(/<\/?[^>]+>/gi, ""),
+        index: $.inArray(entry, this.entries),
+        totalEntries: this.entries.length,
 
-      teaserImage:    (function (entry) {
-        try {
-          return entry.content.match(/(<img.*?>)/gi)[0];
-        }
-        catch (e) {
-          return '';
-        }
-      })(entry),
+        teaserImage: (function (entry) {
+          try {
+            return entry.content.match(/(<img.*?>)/gi)[0];
+          } catch (e) {
+            return "";
+          }
+        })(entry),
 
-      teaserImageUrl: (function (entry) {
-        try {
-          return entry.content.match(/(<img.*?>)/gi)[0].match(/src="(.*?)"/)[1];
-        }
-        catch (e) {
-          return '';
-        }
-      })(entry)
-    }, this.options.tokens);
+        teaserImageUrl: (function (entry) {
+          try {
+            return entry.content
+              .match(/(<img.*?>)/gi)[0]
+              .match(/src="(.*?)"/)[1];
+          } catch (e) {
+            return "";
+          }
+        })(entry),
+      },
+      this.options.tokens
+    );
   };
 
   RSS.prototype.getValueForToken = function (_token, entry) {
     var tokenMap = this.getTokenMap(entry);
-    var token    = _token.replace(/[\{\}]/g, '');
-    var result   = tokenMap[token];
+    var token = _token.replace(/[\{\}]/g, "");
+    var result = tokenMap[token];
 
-    if (typeof result !== 'undefined') {
-      return ((typeof result === 'function') ? result(entry, tokenMap) : result);
+    if (typeof result !== "undefined") {
+      return typeof result === "function" ? result(entry, tokenMap) : result;
     } else {
-      throw new Error('Unknown token: ' + _token + ', url:' + this.url);
+      throw new Error("Unknown token: " + _token + ", url:" + this.url);
     }
   };
 

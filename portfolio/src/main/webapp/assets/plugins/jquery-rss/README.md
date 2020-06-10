@@ -49,7 +49,7 @@ Through cdnjs:
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
     <script src="dist/jquery.rss.min.js"></script>
     <script>
-      jQuery(function($) {
+      jQuery(function ($) {
         $("#rss-feeds").rss("http://feeds.feedburner.com/premiumpixels");
       });
     </script>
@@ -115,9 +115,9 @@ $("#rss-feeds").rss(
     // valid values: any object/hash
     tokens: {
       foo: "bar",
-      bar: function(entry, tokens) {
+      bar: function (entry, tokens) {
         return entry.title;
-      }
+      },
     },
 
     // formats the date with moment.js (optional)
@@ -145,20 +145,20 @@ $("#rss-feeds").rss(
     // this is useful if you want to format dates without moment.js.
     // if you don't use moment.js and don't define a dateFormatFunction, the dates will
     // not be formatted; they will appear exactly as the RSS feed gives them to you.
-    dateFormatFunction: function(date) {},
+    dateFormatFunction: function (date) {},
 
     // a callback, which gets triggered when an error occurs
     // default: function() { throw new Error("jQuery RSS: url don't link to RSS-Feed") }
-    error: function() {},
+    error: function () {},
 
     // a callback, which gets triggered when everything was loaded successfully
     // this is an alternative to the next parameter (callback function)
     // default: function(){}
-    success: function() {},
+    success: function () {},
 
     // a callback, which gets triggered once data was received but before the rendering.
     // this can be useful when you need to remove a spinner or something similar
-    onData: function() {}
+    onData: function () {},
   },
 
   // callback function
@@ -218,14 +218,14 @@ You can also define custom tokens using the `tokens` option:
 $("#foo").rss(url, {
   entryTemplate: "{dynamic}, {static}, {re-use}",
   tokens: {
-    dynamic: function(entry, tokens) {
+    dynamic: function (entry, tokens) {
       return "dynamic-stuff: " + entry.title;
     },
-    "re-use": function(entry, tokens) {
+    "re-use": function (entry, tokens) {
       return encodeURIComponent(tokens.teaserImageUrl);
     },
-    static: "static"
-  }
+    static: "static",
+  },
 });
 ```
 
@@ -246,7 +246,7 @@ Here is a real-world example:
 ```javascript
 $("#foo").rss(url, {
   layoutTemplate: "<table><tr><th>Title</th></tr>{entries}</table>",
-  entryTemplate: "<tr><td>{title}</td></tr>"
+  entryTemplate: "<tr><td>{title}</td></tr>",
 });
 ```
 
@@ -258,9 +258,9 @@ The plugin also allows you to filter specific entries in order to only print the
 $("#foo").rss(url, {
   limit: 100,
   filterLimit: 10,
-  filter: function(entry, tokens) {
+  filter: function (entry, tokens) {
     return tokens.title.indexOf("my filter") > -1;
-  }
+  },
 });
 ```
 

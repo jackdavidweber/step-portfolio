@@ -1,3 +1,3 @@
 GitHubCalendar(".calendar", "IonicaBizau", {
-    responsive: true
+  responsive: true,
 });
