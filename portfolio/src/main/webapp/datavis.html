@@ -2,14 +2,26 @@
 <html>
   <head>
     <title>Simple Map</title>
+    <!-- imported-->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4Cu8t-NfFBtDe7LgTfzqOB2prmSmIQX8"></script>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <!-- custom js -->
+    <script async src="assets/js/map.js"></script>      
+    <script async src="assets/js/chart.js"></script>      
+
+    <!-- custom css -->
     <link id="theme-style" rel="stylesheet" href="assets/css/styles.css">
-    <script type="text/javascript" src="assets/js/map.js"></script>      
+
   </head>
   <body onload="createMap();">
     <h1> Some cool data visualizations </h1>
     <h3> Places I've Rock Climbed <h3/>
     <div id="map"></div>
+    <h3> United States Climbing Participation Over Time <h3/>
+    <div id="chart-container"></div>
+    <a href="https://www.statista.com/statistics/191233/participants-in-climbing-in-the-us-since-2006/"> Source </a>
+
   </body>
 </html>
