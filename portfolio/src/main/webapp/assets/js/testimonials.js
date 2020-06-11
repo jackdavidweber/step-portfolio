@@ -111,3 +111,32 @@ function onPageLoad(){
     getTestimonials();
     initializeVoiceControl();
 }
+
+function findEditDistance(w1, w2){
+    // create 2d matrix dp table using array of arrays
+    dp = [];
+    
+    // create first row representing edit distance of empty vs w2
+    r1 = []
+    for(i=0; i<w2.length+1; i++){
+      r1.push(i);
+    }
+    
+    // add first row to dp table
+    dp.push(r1);
+
+    // Fill in remaining rows TODO: optimize to O(N) rather than O(N^2)
+    for(i=1; i < w1.length+1; i++){
+        row = [i];
+        for(j=0; j<w2.length; j++){
+          row.push(null);
+        }
+        dp.push(row);
+    }
+    
+    // console.log readable DP
+    for(i=0; i<dp.length; i++ ){
+      console.log(dp[i]);
+    }
+
+}
