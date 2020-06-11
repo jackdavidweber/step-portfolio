@@ -112,7 +112,8 @@ function onPageLoad(){
     initializeVoiceControl();
 }
 
-function findEditDistance(w1, w2){
+/** Takes two words and builds/returns the starting DP table to work with */
+function buildInitialTable(w1, w2){
     // create 2d matrix dp table using array of arrays
     dp = [];
     
@@ -133,10 +134,5 @@ function findEditDistance(w1, w2){
         }
         dp.push(row);
     }
-    
-    // console.log readable DP
-    for(i=0; i<dp.length; i++ ){
-      console.log(dp[i]);
-    }
-
+    return dp;
 }
