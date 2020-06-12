@@ -21,13 +21,19 @@ import java.util.ArrayList; // import the ArrayList class
 
 
 
-public final class FindMeetingQuery {
-    
+public final class FindMeetingQuery {    
+  ArrayList<TimeRange> options;
+
+  /*Returns true if the time slot is a possible option with respect to duration*/
+  public boolean slotPossibleDuration(MeetingRequest request, int startSlot, int endSlot){
+      return (request.getDuration() <= Math.abs(endSlot - startSlot));
+  }
+
 
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     // Create collection of timeranges representing options for meeting
     Collection<TimeRange> optionsCollection;
-    ArrayList<TimeRange> options = new ArrayList<TimeRange>(); 
+    options = new ArrayList<TimeRange>(); 
     
     // check if duration is longer than the day. if so, return empty collection.
     long duration = request.getDuration();
@@ -59,7 +65,7 @@ public final class FindMeetingQuery {
     // check if conflict is NOT at the start of day. if it is not, we know we can add option before it (duration permitting).
     TimeRange conflictTR = conflict.getWhen();
     if (!(conflictTR.contains(TimeRange.START_OF_DAY))){
-        if(request.getDuration() <= conflict.getWhen().start() - TimeRange.START_OF_DAY){
+        if(slotPossibleDuration(request, TimeRange.START_OF_DAY, conflict.getWhen().start())){
             options.add(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, conflict.getWhen().start(), false));
         }
     } 
@@ -76,7 +82,7 @@ public final class FindMeetingQuery {
 
     // check if last conflict is at end of day. If NOT, can add option btwn last conflict and end of day.
     if(!(conflict.getWhen().contains(TimeRange.END_OF_DAY))){
-        if(request.getDuration() <= TimeRange.END_OF_DAY - start){
+        if(slotPossibleDuration(request, start, TimeRange.END_OF_DAY)){
             options.add(TimeRange.fromStartEnd(start, TimeRange.END_OF_DAY, true));
         }
     }
