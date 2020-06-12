@@ -165,3 +165,30 @@ function findEditDistance(w1,w2){
   // return bottom right corner as the edit distance btwn w1 and w2
   return(dp[dp.length-1][dp[0].length-1]);
 }
+
+/** Takes array of strings and a term. Returns an array of the strings 
+ *  TODO: sorted by their edit distance to the term. Where first item in the array has the lowest edit distance. 
+ *  maxED specifies the string with maximum edit distance to the term to be included in the returned array.
+ *  Note that for this purpose, edit distance refers to the minimum edit distance of a word in the string
+ */
+function distanceOfArr(arrSentences, term, maxED){
+  let retArray;
+  for (const sentence of arrSentences){
+    ed = minEditDistanceWord(sentence, term)
+    if(ed < maxED){
+      retArray.push({sentence: ed});
+    }
+  }
+}
+
+/** Takes a sentence and returns the minimum edit distance of a word in the sentence to the term */
+function minEditDistanceWord(sentence, term){
+  arrOfWords = sentence.split(" ");
+
+  let minEditDistance = Infinity;
+  for (const word of arrOfWords){
+    minEditDistance = Math.min(minEditDistance, findEditDistance(word, term));
+  }
+
+  return minEditDistance
+}
