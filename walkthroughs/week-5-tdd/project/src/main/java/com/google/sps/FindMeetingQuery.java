@@ -26,7 +26,7 @@ public final class FindMeetingQuery {
 
   /*Returns true if the time slot is a possible option with respect to duration*/
   public boolean slotPossibleDuration(MeetingRequest request, int startSlot, int endSlot){
-      return (request.getDuration() <= Math.abs(endSlot - startSlot));
+      return (request.getDuration() <= (endSlot - startSlot));
   }
 
 
@@ -73,7 +73,7 @@ public final class FindMeetingQuery {
     while(eventsIterator.hasNext()){
         // add the timerange between the end of the last event and the start of the current event
         conflict = eventsIterator.next();
-        if(request.getDuration() <= conflict.getWhen().start() - start){
+        if(slotPossibleDuration(request, start, conflict.getWhen().start())){
             options.add(TimeRange.fromStartEnd(start, conflict.getWhen().start(), false));
         }
         // set the start for the next option
