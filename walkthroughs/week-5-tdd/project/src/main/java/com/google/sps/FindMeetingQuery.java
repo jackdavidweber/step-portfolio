@@ -17,25 +17,28 @@ package com.google.sps;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Arrays;
+import java.util.ArrayList; // import the ArrayList class
+
 
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     // Create collection of timeranges representing options for meeting
-    Collection<TimeRange> options = Arrays.asList();
+    Collection<TimeRange> optionsCollection;
+    ArrayList<TimeRange> options = new ArrayList<TimeRange>(); 
     
     // check if duration is longer than the day. if so, return empty collection.
     long duration = request.getDuration();
     if (duration > TimeRange.WHOLE_DAY.duration()){
-        // options = Arrays.asList();
-        return options;
+        optionsCollection = Arrays.asList();
+        return optionsCollection;
     }
 
     // check if no attendees. if so, return collection of one item being the full day
     Collection attendees = request.getAttendees();
     if (attendees.isEmpty()){
-        options = Arrays.asList(TimeRange.WHOLE_DAY);
-        return options;
+        optionsCollection = Arrays.asList(TimeRange.WHOLE_DAY);
+        return optionsCollection;
     }
 
     Iterator<Event> eventsIterator =  events.iterator();
@@ -71,6 +74,7 @@ public final class FindMeetingQuery {
         options.add(TimeRange.fromStartEnd(start, TimeRange.END_OF_DAY, true));
     }
 
+    System.out.println(options);
     return options;
 
     // throw new UnsupportedOperationException("TODO: Implement this method.");
