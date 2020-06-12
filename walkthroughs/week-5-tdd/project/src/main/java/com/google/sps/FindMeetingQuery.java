@@ -31,6 +31,14 @@ public final class FindMeetingQuery {
       return (request.getDuration() <= (endSlot - startSlot));
   }
 
+  public boolean conflictIsRelevant(Event conflict, MeetingRequest request){
+    Set<String> conflictAttendees = conflict.getAttendees();
+    Collection<String> meetingAttendees = request.getAttendees();
+
+    // check if conflict involves anybody in the request. 
+    // returns true if the two sets have at least one attendee in common
+    return !(Collections.disjoint(conflictAttendees, meetingAttendees));
+  }
 
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     // Create collection of timeranges representing options for meeting
@@ -59,24 +67,19 @@ public final class FindMeetingQuery {
         return optionsCollection;
     }
 
-    // asuming events contains at least one event
+    // now we know that there is at least one event
     Event conflict = eventsIterator.next();
-    TimeRange conflictTR = conflict.getWhen();
     int start;
 
-    System.out.println(conflict);
-
-    // check if conflict involves anybody in the request. If it does not, we can effectively ignore it.
-    Set<String> conflictAttendees = conflict.getAttendees();
-    Collection<String> meetingAttendees = request.getAttendees();
-    // if conflict and meeting attendees have no elements in common.
-    if(Collections.disjoint(conflictAttendees, meetingAttendees)){
+    // check if conflict involves anybody in the request. If it does NOT, we can effectively ignore the conflict.
+    if(!conflictIsRelevant(conflict, request)){  // if conflict is NOT relevant...
         start = TimeRange.START_OF_DAY;
     } else{
+        // we now have to pay attention to the conflict
         start = conflict.getWhen().end();
 
         // check if conflict is NOT at the start of day. if it is not, we know we can add option before it (duration permitting).
-        if (!(conflictTR.contains(TimeRange.START_OF_DAY))){
+        if (!(conflict.getWhen().contains(TimeRange.START_OF_DAY))){
             // check duration
             if(slotPossibleDuration(request, TimeRange.START_OF_DAY, conflict.getWhen().start())){
                 options.add(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, conflict.getWhen().start(), false));
@@ -84,14 +87,32 @@ public final class FindMeetingQuery {
         } 
     }
     while(eventsIterator.hasNext()){
-        // add the timerange between the end of the last event and the start of the current event
+        Event prevConflict = conflict;
         conflict = eventsIterator.next();
-        // check duration
-        if(slotPossibleDuration(request, start, conflict.getWhen().start())){
-            options.add(TimeRange.fromStartEnd(start, conflict.getWhen().start(), false));
+
+        // if previous conflict end is after curren conflict end, replace current conflict with previous conflict
+        if (prevConflict.getWhen().end() > conflict.getWhen().end()){
+            conflict = prevConflict;
         }
-        // set the start for the next option
-        start = conflict.getWhen().end();
+
+        if(conflictIsRelevant(conflict, request)){
+
+            // check duration
+            if(slotPossibleDuration(request, start, conflict.getWhen().start())){
+
+            // add the timerange between the end of the last event and the start of the current event
+                options.add(TimeRange.fromStartEnd(start, conflict.getWhen().start(), false));
+            }
+
+            // set the start for the next option
+            start = conflict.getWhen().end();
+        }
+    }
+
+    // check if last conflict is not relevant. If not, add option btwn last conflict and end of day
+    if(!conflictIsRelevant(conflict, request)){
+        options.add(TimeRange.fromStartEnd(start, TimeRange.END_OF_DAY, true));
+        return options;
     }
 
     // check if last conflict is at end of day. If NOT, can add option btwn last conflict and end of day.
