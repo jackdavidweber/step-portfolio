@@ -22,6 +22,8 @@ import java.util.ArrayList; // import the ArrayList class
 
 
 public final class FindMeetingQuery {
+    
+
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     // Create collection of timeranges representing options for meeting
     Collection<TimeRange> optionsCollection;
@@ -54,24 +56,29 @@ public final class FindMeetingQuery {
     System.out.println(conflict);
     int start = conflict.getWhen().end();
 
-    // check if conflict is NOT at the start of day. if it is not, we know we can add option before it.
+    // check if conflict is NOT at the start of day. if it is not, we know we can add option before it (duration permitting).
     TimeRange conflictTR = conflict.getWhen();
     if (!(conflictTR.contains(TimeRange.START_OF_DAY))){
-        options.add(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, conflict.getWhen().start(), false));
+        if(request.getDuration() <= conflict.getWhen().start() - TimeRange.START_OF_DAY){
+            options.add(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, conflict.getWhen().start(), false));
+        }
     } 
 
     while(eventsIterator.hasNext()){
         // add the timerange between the end of the last event and the start of the current event
         conflict = eventsIterator.next();
-        options.add(TimeRange.fromStartEnd(start, conflict.getWhen().start(), false));
-        
+        if(request.getDuration() <= conflict.getWhen().start() - start){
+            options.add(TimeRange.fromStartEnd(start, conflict.getWhen().start(), false));
+        }
         // set the start for the next option
         start = conflict.getWhen().end();
     }
 
     // check if last conflict is at end of day. If NOT, can add option btwn last conflict and end of day.
     if(!(conflict.getWhen().contains(TimeRange.END_OF_DAY))){
-        options.add(TimeRange.fromStartEnd(start, TimeRange.END_OF_DAY, true));
+        if(request.getDuration() <= TimeRange.END_OF_DAY - start){
+            options.add(TimeRange.fromStartEnd(start, TimeRange.END_OF_DAY, true));
+        }
     }
 
     System.out.println(options);
