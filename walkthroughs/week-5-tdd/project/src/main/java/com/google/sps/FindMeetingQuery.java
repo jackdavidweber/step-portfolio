@@ -43,10 +43,10 @@ public final class FindMeetingQuery {
 
     Iterator<Event> eventsIterator =  events.iterator();
 
-
+    // if no events return full day
     if(!eventsIterator.hasNext()){
-        throw new UnsupportedOperationException("TODO: Implement this method.");
-
+        optionsCollection = Arrays.asList(TimeRange.WHOLE_DAY);
+        return optionsCollection;
     }
 
     // asuming events contains at least one event
