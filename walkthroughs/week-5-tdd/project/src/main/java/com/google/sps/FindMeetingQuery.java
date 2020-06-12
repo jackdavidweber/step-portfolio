@@ -15,9 +15,11 @@
 package com.google.sps;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Arrays;
 import java.util.ArrayList; // import the ArrayList class
+import java.util.Set;
 
 
 
@@ -59,20 +61,32 @@ public final class FindMeetingQuery {
 
     // asuming events contains at least one event
     Event conflict = eventsIterator.next();
-    System.out.println(conflict);
-    int start = conflict.getWhen().end();
-
-    // check if conflict is NOT at the start of day. if it is not, we know we can add option before it (duration permitting).
     TimeRange conflictTR = conflict.getWhen();
-    if (!(conflictTR.contains(TimeRange.START_OF_DAY))){
-        if(slotPossibleDuration(request, TimeRange.START_OF_DAY, conflict.getWhen().start())){
-            options.add(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, conflict.getWhen().start(), false));
-        }
-    } 
+    int start;
 
+    System.out.println(conflict);
+
+    // check if conflict involves anybody in the request. If it does not, we can effectively ignore it.
+    Set<String> conflictAttendees = conflict.getAttendees();
+    Collection<String> meetingAttendees = request.getAttendees();
+    // if conflict and meeting attendees have no elements in common.
+    if(Collections.disjoint(conflictAttendees, meetingAttendees)){
+        start = TimeRange.START_OF_DAY;
+    } else{
+        start = conflict.getWhen().end();
+
+        // check if conflict is NOT at the start of day. if it is not, we know we can add option before it (duration permitting).
+        if (!(conflictTR.contains(TimeRange.START_OF_DAY))){
+            // check duration
+            if(slotPossibleDuration(request, TimeRange.START_OF_DAY, conflict.getWhen().start())){
+                options.add(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, conflict.getWhen().start(), false));
+            }
+        } 
+    }
     while(eventsIterator.hasNext()){
         // add the timerange between the end of the last event and the start of the current event
         conflict = eventsIterator.next();
+        // check duration
         if(slotPossibleDuration(request, start, conflict.getWhen().start())){
             options.add(TimeRange.fromStartEnd(start, conflict.getWhen().start(), false));
         }
@@ -82,6 +96,7 @@ public final class FindMeetingQuery {
 
     // check if last conflict is at end of day. If NOT, can add option btwn last conflict and end of day.
     if(!(conflict.getWhen().contains(TimeRange.END_OF_DAY))){
+        // check duration
         if(slotPossibleDuration(request, start, TimeRange.END_OF_DAY)){
             options.add(TimeRange.fromStartEnd(start, TimeRange.END_OF_DAY, true));
         }
