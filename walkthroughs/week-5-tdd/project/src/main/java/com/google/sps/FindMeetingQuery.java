@@ -40,6 +40,14 @@ public final class FindMeetingQuery {
     return !(Collections.disjoint(conflictAttendees, meetingAttendees));
   }
 
+  public boolean conflictIsOptionallyRelevant(Event conflict, MeetingRequest request){
+    Set<String> conflictAttendees = conflict.getAttendees();
+    Collection<String> optionalAttendees = request.getOptionalAttendees();
+
+    // check if conflict involves anybody in the request. 
+    // returns true if the two sets have at least one optional attendee in common
+    return !(Collections.disjoint(conflictAttendees, optionalAttendees));  }
+
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     // Create collection of timeranges representing options for meeting
     Collection<TimeRange> optionsCollection;
@@ -95,13 +103,15 @@ public final class FindMeetingQuery {
             conflict = prevConflict;
         }
 
-        if(conflictIsRelevant(conflict, request)){
+        // if conflict is relevant to attendees OR (there already is a viable time AND conflict is relevant to optional attendees)
+        if(conflictIsRelevant(conflict, request) || (!options.isEmpty() && conflictIsOptionallyRelevant(conflict, request))){
 
             // check duration
             if(slotPossibleDuration(request, start, conflict.getWhen().start())){
+                TimeRange slot = TimeRange.fromStartEnd(start, conflict.getWhen().start(), false);
 
-            // add the timerange between the end of the last event and the start of the current event
-                options.add(TimeRange.fromStartEnd(start, conflict.getWhen().start(), false));
+                // add the timerange between the end of the last event and the start of the current event
+                options.add(slot);
             }
 
             // set the start for the next option
