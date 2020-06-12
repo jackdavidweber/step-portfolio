@@ -136,3 +136,32 @@ function buildInitialTable(w1, w2){
     }
     return dp;
 }
+
+function findEditDistance(w1,w2){
+  dp = buildInitialTable(w1,w2);
+
+  for(j=1; j<dp.length; j++){
+    for(k=1; k<dp[j].length; k++){
+
+      // if character in w1 matches character in w2 give current cell same value as diagnol
+      if(w1[j-1] == w2[k-1]){
+        dp[j][k]=dp[j-1][k-1];
+        
+      // otherwise give current cell value = 1 + minimum (diagnol, top, left)
+      } else {
+        diagnol = dp[j-1][k-1];
+        above = dp[j-1][k];
+        left = dp[j][k-1];
+        dp[j][k] = 1 + Math.min(diagnol, above, left);
+      }
+    }
+  }
+
+  // console.log readable DP
+  for(i=0; i<dp.length; i++ ){
+    console.log(dp[i]);
+  }
+
+  // return bottom right corner as the edit distance btwn w1 and w2
+  return(dp[dp.length-1][dp[0].length-1]);
+}
