@@ -137,6 +137,31 @@ function buildInitialTable(w1, w2){
     return dp;
 }
 
+/** Takes two words and builds/returns the starting DP table to work with */
+function buildInitialTable(w1, w2){
+    // create 2d matrix dp table using array of arrays
+    dp = [];
+    
+    // create first row representing edit distance of empty vs w2
+    r1 = []
+    for(i=0; i<w2.length+1; i++){
+      r1.push(i);
+    }
+    
+    // add first row to dp table
+    dp.push(r1);
+
+    // Fill in remaining rows TODO: optimize to O(N) rather than O(N^2)
+    for(i=1; i < w1.length+1; i++){
+        row = [i];
+        for(j=0; j<w2.length; j++){
+          row.push(null);
+        }
+        dp.push(row);
+    }
+    return dp;
+}
+
 function findEditDistance(w1,w2){
   dp = buildInitialTable(w1,w2);
 
@@ -157,28 +182,27 @@ function findEditDistance(w1,w2){
     }
   }
 
-  // console.log readable DP
-  for(i=0; i<dp.length; i++ ){
-    console.log(dp[i]);
-  }
-
   // return bottom right corner as the edit distance btwn w1 and w2
   return(dp[dp.length-1][dp[0].length-1]);
 }
 
-/** Takes array of strings and a term. Returns an array of the strings 
- *  TODO: sorted by their edit distance to the term. Where first item in the array has the lowest edit distance. 
+
+/** Takes array of strings and a term. Returns an array of objects 
+ *  (TODO: sorted by their edit distance to the term. Where first item in the array has the lowest edit distance.) 
  *  maxED specifies the string with maximum edit distance to the term to be included in the returned array.
  *  Note that for this purpose, edit distance refers to the minimum edit distance of a word in the string
  */
 function distanceOfArr(arrSentences, term, maxED){
-  let retArray;
+  let retArray = []
   for (const sentence of arrSentences){
     ed = minEditDistanceWord(sentence, term)
     if(ed < maxED){
-      retArray.push({sentence: ed});
+      retArray.push({"sentence": sentence, "editDistance": ed});
     }
+
   }
+  
+  return retArray;
 }
 
 /** Takes a sentence and returns the minimum edit distance of a word in the sentence to the term */
@@ -192,3 +216,23 @@ function minEditDistanceWord(sentence, term){
 
   return minEditDistance
 }
+
+
+/**
+Since I haven't implemented yet into actual site, here is a test that I ran:
+
+aS = [
+  "hello there my name is Jack",
+  "Hi jack how are you Doing today",
+  "I'm doing quite well thank you for asking kindly"
+  ]
+
+
+console.log(JSON.stringify(distanceOfArr(aS, "name", 5)));
+--> [
+    {"sentence":"hello there my name is Jack","editDistance":0},
+    {"sentence":"Hi jack how are you Doing today","editDistance":2},
+    {"sentence":"I'm doing quite well thank you for asking kindly","editDistance":3}
+    ]
+
+*/
