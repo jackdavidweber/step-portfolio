@@ -34,8 +34,7 @@ public final class FindMeetingQueryTest {
   // Some people that we can use in our tests.
   private static final String PERSON_A = "Person A";
   private static final String PERSON_B = "Person B";
-    private static final String PERSON_C = "Person C";
-
+  private static final String PERSON_C = "Person C";
 
   // All dates are the first day of the year 2020.
   private static final int TIME_0800AM = TimeRange.getTimeInMinutes(8, 0);
@@ -284,7 +283,7 @@ public final class FindMeetingQueryTest {
   
   @Test
   public void onlyOptionalAttendeesConsidered() {
-    // Have each person have different events. We should see two options because each person has
+    // Have each optional person have different events. We should see two options because each person has
     // split the restricted times.
     //
     // Events  :       |--A--|     |--B--|
@@ -294,8 +293,6 @@ public final class FindMeetingQueryTest {
     Collection<Event> events = Arrays.asList(
         new Event("Event 1", TimeRange.fromStartDuration(TIME_0800AM, DURATION_30_MINUTES),
             Arrays.asList(PERSON_A)),
-        // new Event("Event 3", TimeRange.fromStartDuration(TIME_0830AM, DURATION_30_MINUTES),
-        //     Arrays.asList(PERSON_C)),
         new Event("Event 2", TimeRange.fromStartDuration(TIME_0900AM, DURATION_30_MINUTES),
             Arrays.asList(PERSON_B))
         );
@@ -304,7 +301,6 @@ public final class FindMeetingQueryTest {
         new MeetingRequest(Arrays.asList(), DURATION_30_MINUTES);
     request.addOptionalAttendee(PERSON_A);
     request.addOptionalAttendee(PERSON_B);
-
 
     Collection<TimeRange> actual = query.query(events, request);
     Collection<TimeRange> expected =
@@ -318,10 +314,10 @@ public final class FindMeetingQueryTest {
 
   @Test
   public void notEnoughRoomOptional() {
-    // Have one person, but make it so that there is not enough room at any point in the day to
+    // Have two optional people, but make it so that there is not enough room at any point in the day to
     // have the meeting.
     //
-    // Events  : |--A-----| |-----A----|
+    // Events  : |--A-----| |-----B----|
     // Day     : |---------------------|
     // Options :
 
@@ -335,13 +331,10 @@ public final class FindMeetingQueryTest {
     request.addOptionalAttendee(PERSON_A);
     request.addOptionalAttendee(PERSON_B);
 
-
     Collection<TimeRange> actual = query.query(events, request);
     Collection<TimeRange> expected = Arrays.asList();
 
     Assert.assertEquals(expected, actual);
   }
-  
-
 }
 

@@ -22,7 +22,6 @@ import java.util.ArrayList; // import the ArrayList class
 import java.util.Set;
 
 
-
 public final class FindMeetingQuery {    
   ArrayList<TimeRange> options;
 
@@ -35,7 +34,6 @@ public final class FindMeetingQuery {
     Set<String> conflictAttendees = conflict.getAttendees();
     // Collection<String> meetingAttendees = request.getAttendees();
 
-    // check if conflict involves anybody in the request. 
     // returns true if the two sets have at least one attendee in common
     return !(Collections.disjoint(conflictAttendees, meetingAttendees));
   }
@@ -44,7 +42,6 @@ public final class FindMeetingQuery {
     Set<String> conflictAttendees = conflict.getAttendees();
     Collection<String> optionalAttendees = request.getOptionalAttendees();
 
-    // check if conflict involves anybody in the request. 
     // returns true if the two sets have at least one optional attendee in common
     return !(Collections.disjoint(conflictAttendees, optionalAttendees));  }
 
@@ -138,14 +135,6 @@ public final class FindMeetingQuery {
             options.add(TimeRange.fromStartEnd(start, TimeRange.END_OF_DAY, true));
         }
     }
-
-    System.out.println(options);
     return options;
-
-    // throw new UnsupportedOperationException("TODO: Implement this method.");
-    
-
-    
-
   }
 }
