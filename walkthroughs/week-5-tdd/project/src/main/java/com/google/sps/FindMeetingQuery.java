@@ -31,9 +31,9 @@ public final class FindMeetingQuery {
       return (request.getDuration() <= (endSlot - startSlot));
   }
 
-  public boolean conflictIsRelevant(Event conflict, MeetingRequest request){
+  public boolean conflictIsRelevant(Event conflict, Collection meetingAttendees){
     Set<String> conflictAttendees = conflict.getAttendees();
-    Collection<String> meetingAttendees = request.getAttendees();
+    // Collection<String> meetingAttendees = request.getAttendees();
 
     // check if conflict involves anybody in the request. 
     // returns true if the two sets have at least one attendee in common
@@ -60,11 +60,17 @@ public final class FindMeetingQuery {
         return optionsCollection;
     }
 
-    // check if no attendees. if so, return collection of one item being the full day
     Collection attendees = request.getAttendees();
-    if (attendees.isEmpty()){
+    Collection optionalAttendees = request.getOptionalAttendees();
+
+    // if no attendees or optional attendees return collection of one item being the full day
+    if (attendees.isEmpty() && optionalAttendees.isEmpty()){
         optionsCollection = Arrays.asList(TimeRange.WHOLE_DAY);
         return optionsCollection;
+    
+    // if there are optional attendees but no attendees, treat optional attendees as attendees
+    } else if (attendees.isEmpty()){
+        attendees = optionalAttendees;
     }
 
     Iterator<Event> eventsIterator =  events.iterator();
@@ -80,7 +86,7 @@ public final class FindMeetingQuery {
     int start;
 
     // check if conflict involves anybody in the request. If it does NOT, we can effectively ignore the conflict.
-    if(!conflictIsRelevant(conflict, request)){  // if conflict is NOT relevant...
+    if(!conflictIsRelevant(conflict, attendees)){  // if conflict is NOT relevant...
         start = TimeRange.START_OF_DAY;
     } else{
         // we now have to pay attention to the conflict
@@ -104,7 +110,7 @@ public final class FindMeetingQuery {
         }
 
         // if conflict is relevant to attendees OR (there already is a viable time AND conflict is relevant to optional attendees)
-        if(conflictIsRelevant(conflict, request) || (!options.isEmpty() && conflictIsOptionallyRelevant(conflict, request))){
+        if(conflictIsRelevant(conflict, attendees) || (!options.isEmpty() && conflictIsOptionallyRelevant(conflict, request))){
 
             // check duration
             if(slotPossibleDuration(request, start, conflict.getWhen().start())){
@@ -120,7 +126,7 @@ public final class FindMeetingQuery {
     }
 
     // check if last conflict is not relevant. If not, add option btwn last conflict and end of day
-    if(!conflictIsRelevant(conflict, request)){
+    if(!conflictIsRelevant(conflict, attendees)){
         options.add(TimeRange.fromStartEnd(start, TimeRange.END_OF_DAY, true));
         return options;
     }
