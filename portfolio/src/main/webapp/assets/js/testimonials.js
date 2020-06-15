@@ -115,11 +115,11 @@ function onPageLoad(){
 /** Takes two words and builds/returns the starting DP table to work with */
 function buildInitialTable(w1, w2){
     // create 2d matrix dp table using array of arrays
-    dp = [];
+    const dp = [];
     
     // create first row representing edit distance of empty vs w2
-    r1 = []
-    for(i=0; i<w2.length+1; i++){
+    const r1 = []
+    for(let i=0; i<w2.length+1; i++){
       r1.push(i);
     }
     
@@ -127,8 +127,8 @@ function buildInitialTable(w1, w2){
     dp.push(r1);
 
     // Fill in remaining rows TODO: optimize to O(N) rather than O(N^2)
-    for(i=1; i < w1.length+1; i++){
-        row = [i];
+    for(let i=1; i < w1.length+1; i++){
+        let row = [i];
         for(j=0; j<w2.length; j++){
           row.push(null);
         }
@@ -137,22 +137,25 @@ function buildInitialTable(w1, w2){
     return dp;
 }
 
+/**
+ * Uses dynamic programming table to compute the minimum edit distance between two strings.
+ * DP table is 2D with the minimum edit distance in the bottom right corner.
+ */
 function findEditDistance(w1,w2){
-  dp = buildInitialTable(w1,w2);
+  const dp = buildInitialTable(w1,w2);
 
-  for(j=1; j<dp.length; j++){
-    for(k=1; k<dp[j].length; k++){
+  for(let j=1; j<dp.length; j++){
+    for(let k=1; k<dp[j].length; k++){
 
-      // if character in w1 matches character in w2 give current cell same value as diagnol
+      // if character in w1 matches character in w2 give current cell same value as diagonal
       if(w1[j-1] == w2[k-1]){
         dp[j][k]=dp[j-1][k-1];
-        
-      // otherwise give current cell value = 1 + minimum (diagnol, top, left)
+      // otherwise give current cell value = 1 + minimum (diagonal, top, left)
       } else {
-        diagnol = dp[j-1][k-1];
-        above = dp[j-1][k];
-        left = dp[j][k-1];
-        dp[j][k] = 1 + Math.min(diagnol, above, left);
+        let diagonal = dp[j-1][k-1];
+        let above = dp[j-1][k];
+        let left = dp[j][k-1];
+        dp[j][k] = 1 + Math.min(diagonal, above, left);
       }
     }
   }
@@ -161,28 +164,26 @@ function findEditDistance(w1,w2){
   return(dp[dp.length-1][dp[0].length-1]);
 }
 
-
 /** Takes array of strings and a term. Returns an array of objects 
- *  (TODO: sorted by their edit distance to the term. Where first item in the array has the lowest edit distance.) 
  *  maxED specifies the string with maximum edit distance to the term to be included in the returned array.
  *  Note that for this purpose, edit distance refers to the minimum edit distance of a word in the string
+ *  TODO: sorted by their edit distance to the term. Where first item in the array has the lowest edit distance.
+
  */
 function distanceOfArr(arrSentences, term, maxED){
   let retArray = []
   for (const sentence of arrSentences){
-    ed = minEditDistanceWord(sentence, term)
+    let ed = minEditDistanceWord(sentence, term)
     if(ed < maxED){
       retArray.push({"sentence": sentence, "editDistance": ed});
     }
-
   }
-  
   return retArray;
 }
 
 /** Takes a sentence and returns the minimum edit distance of a word in the sentence to the term */
 function minEditDistanceWord(sentence, term){
-  arrOfWords = sentence.split(" ");
+  const arrOfWords = sentence.split(" ");
 
   let minEditDistance = Infinity;
   for (const word of arrOfWords){
@@ -191,23 +192,3 @@ function minEditDistanceWord(sentence, term){
 
   return minEditDistance
 }
-
-
-/**
-Since I haven't implemented yet into actual site, here is a test that I ran:
-
-aS = [
-  "hello there my name is Jack",
-  "Hi jack how are you Doing today",
-  "I'm doing quite well thank you for asking kindly"
-  ]
-
-
-console.log(JSON.stringify(distanceOfArr(aS, "name", 5)));
---> [
-    {"sentence":"hello there my name is Jack","editDistance":0},
-    {"sentence":"Hi jack how are you Doing today","editDistance":2},
-    {"sentence":"I'm doing quite well thank you for asking kindly","editDistance":3}
-    ]
-
-*/
