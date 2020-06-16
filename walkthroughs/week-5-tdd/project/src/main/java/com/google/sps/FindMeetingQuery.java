@@ -26,19 +26,18 @@ public final class FindMeetingQuery {
   ArrayList<TimeRange> options;
 
   /*Returns true if the time slot is a possible option with respect to duration*/
-  public boolean slotPossibleDuration(MeetingRequest request, int startSlot, int endSlot){
+  public boolean slotIsPossibleDuration(MeetingRequest request, int startSlot, int endSlot){
       return (request.getDuration() <= (endSlot - startSlot));
   }
 
   public boolean conflictIsRelevant(Event conflict, Collection meetingAttendees){
     Set<String> conflictAttendees = conflict.getAttendees();
-    // Collection<String> meetingAttendees = request.getAttendees();
 
     // returns true if the two sets have at least one attendee in common
     return !(Collections.disjoint(conflictAttendees, meetingAttendees));
   }
 
-  public boolean conflictIsOptionallyRelevant(Event conflict, MeetingRequest request){
+  public boolean conflictIsRelevantForOptionalMembers(Event conflict, MeetingRequest request){
     Set<String> conflictAttendees = conflict.getAttendees();
     Collection<String> optionalAttendees = request.getOptionalAttendees();
 
@@ -47,14 +46,14 @@ public final class FindMeetingQuery {
 
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     // Create collection of timeranges representing options for meeting
-    Collection<TimeRange> optionsCollection;
+    Collection<TimeRange> availabilityCollection;
     options = new ArrayList<TimeRange>(); 
     
     // check if duration is longer than the day. if so, return empty collection.
     long duration = request.getDuration();
     if (duration > TimeRange.WHOLE_DAY.duration()){
-        optionsCollection = Arrays.asList();
-        return optionsCollection;
+        availabilityCollection = Arrays.asList();
+        return availabilityCollection;
     }
 
     Collection attendees = request.getAttendees();
@@ -62,8 +61,8 @@ public final class FindMeetingQuery {
 
     // if no attendees or optional attendees return collection of one item being the full day
     if (attendees.isEmpty() && optionalAttendees.isEmpty()){
-        optionsCollection = Arrays.asList(TimeRange.WHOLE_DAY);
-        return optionsCollection;
+        availabilityCollection = Arrays.asList(TimeRange.WHOLE_DAY);
+        return availabilityCollection;
     
     // if there are optional attendees but no attendees, treat optional attendees as attendees
     } else if (attendees.isEmpty()){
@@ -74,8 +73,8 @@ public final class FindMeetingQuery {
 
     // if no events return full day
     if(!eventsIterator.hasNext()){
-        optionsCollection = Arrays.asList(TimeRange.WHOLE_DAY);
-        return optionsCollection;
+        availabilityCollection = Arrays.asList(TimeRange.WHOLE_DAY);
+        return availabilityCollection;
     }
 
     // now we know that there is at least one event
@@ -92,7 +91,7 @@ public final class FindMeetingQuery {
         // check if conflict is NOT at the start of day. if it is not, we know we can add option before it (duration permitting).
         if (!(conflict.getWhen().contains(TimeRange.START_OF_DAY))){
             // check duration
-            if(slotPossibleDuration(request, TimeRange.START_OF_DAY, conflict.getWhen().start())){
+            if(slotIsPossibleDuration(request, TimeRange.START_OF_DAY, conflict.getWhen().start())){
                 options.add(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, conflict.getWhen().start(), false));
             }
         } 
@@ -107,10 +106,10 @@ public final class FindMeetingQuery {
         }
 
         // if conflict is relevant to attendees OR (there already is a viable time AND conflict is relevant to optional attendees)
-        if(conflictIsRelevant(conflict, attendees) || (!options.isEmpty() && conflictIsOptionallyRelevant(conflict, request))){
+        if(conflictIsRelevant(conflict, attendees) || (!options.isEmpty() && conflictIsRelevantForOptionalMembers(conflict, request))){
 
             // check duration
-            if(slotPossibleDuration(request, start, conflict.getWhen().start())){
+            if(slotIsPossibleDuration(request, start, conflict.getWhen().start())){
                 TimeRange slot = TimeRange.fromStartEnd(start, conflict.getWhen().start(), false);
 
                 // add the timerange between the end of the last event and the start of the current event
@@ -131,7 +130,7 @@ public final class FindMeetingQuery {
     // check if last conflict is at end of day. If NOT, can add option btwn last conflict and end of day.
     if(!(conflict.getWhen().contains(TimeRange.END_OF_DAY))){
         // check duration
-        if(slotPossibleDuration(request, start, TimeRange.END_OF_DAY)){
+        if(slotIsPossibleDuration(request, start, TimeRange.END_OF_DAY)){
             options.add(TimeRange.fromStartEnd(start, TimeRange.END_OF_DAY, true));
         }
     }
