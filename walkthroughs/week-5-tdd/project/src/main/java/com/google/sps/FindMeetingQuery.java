@@ -20,6 +20,8 @@ import java.util.Iterator;
 import java.util.Arrays;
 import java.util.ArrayList; // import the ArrayList class
 import java.util.Set;
+import java.util.Comparator;
+
 
 
 public final class FindMeetingQuery {    
@@ -69,7 +71,10 @@ public final class FindMeetingQuery {
         attendees = optionalAttendees;
     }
 
-    Iterator<Event> eventsIterator =  events.iterator();
+    ArrayList<Event> eventsList = new ArrayList<Event>(events);
+    Collections.sort(eventsList, Event.ORDER_BY_START);
+
+    Iterator<Event> eventsIterator =  eventsList.iterator();
 
     // if no events return full day
     if(!eventsIterator.hasNext()){

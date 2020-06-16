@@ -18,6 +18,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Comparator;
+
 
 /**
  * Event is the container class for when a specific group of people are meeting and are therefore
@@ -27,6 +29,16 @@ public final class Event {
   private final String title;
   private final TimeRange when;
   private final Set<String> attendees = new HashSet<>();
+
+  /**
+   * A comparator for sorting events by their start time in ascending order.
+   */
+  public static final Comparator<Event> ORDER_BY_START = new Comparator<Event>() {
+    @Override
+    public int compare(Event a, Event b) {
+      return Long.compare(a.getWhen().start(), b.getWhen().start());
+    }
+  };
 
   /**
    * Creates a new event.
