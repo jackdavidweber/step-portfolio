@@ -20,7 +20,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Comparator;
 
-
 /**
  * Event is the container class for when a specific group of people are meeting and are therefore
  * busy. Events are considered read-only.

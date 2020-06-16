@@ -22,8 +22,6 @@ import java.util.ArrayList; // import the ArrayList class
 import java.util.Set;
 import java.util.Comparator;
 
-
-
 public final class FindMeetingQuery {    
   ArrayList<TimeRange> options;
 
@@ -71,6 +69,7 @@ public final class FindMeetingQuery {
         attendees = optionalAttendees;
     }
 
+    // Sort events by start time in ascending order
     ArrayList<Event> eventsList = new ArrayList<Event>(events);
     Collections.sort(eventsList, Event.ORDER_BY_START);
 
