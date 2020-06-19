@@ -53,15 +53,22 @@ function filterFunction() {
     filter = input.value.toUpperCase();
     ul = document.getElementById("testimonialUl");
     li = ul.getElementsByTagName("li");
+    const stringArray = [];
     for (i = 0; i < li.length; i++) {
         blockQuote = li[i].getElementsByTagName("blockquote")[0];
         p = blockQuote.getElementsByTagName("p")[0];
         txtValue = p.textContent || p.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            li[i].style.display = "";
-        } else {
-            li[i].style.display = "none";
-        }
+        stringArray.push(txtValue.toUpperCase()); // FIXME: touppercase might not work
+        
+        //set all of the list items to disapear so that they can be made to reapear later
+        li[i].style.display = "none";
+    }
+
+    const matches = distanceOfArr(stringArray, filter, 2)
+
+    // make matches re-appear
+    for (i=0; i < matches.length; i++){
+        li[matches[i].arrIndex].style.display = "";
     }
 }
 
@@ -171,11 +178,13 @@ function findEditDistance(w1,w2){
 
  */
 function distanceOfArr(arrSentences, term, maxED){
+  let tracker = 0
   let retArray = []
   for (const sentence of arrSentences){
     let ed = minEditDistanceWord(sentence, term)
     if(ed < maxED){
-      retArray.push({"sentence": sentence, "editDistance": ed});
+      retArray.push({"sentence": sentence, "editDistance": ed, "arrIndex": tracker});
+      tracker += 1;
     }
   }
   return retArray;
