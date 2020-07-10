@@ -62,7 +62,15 @@ jQuery(document).ready(function($) {
         }
     );
     
-    /* Github Activity Feed - https://github.com/caseyscarborough/github-activity */
-    GitHubActivity.feed({ username: "jackdavidweber", selector: "#ghfeed" });
+    // /* Github Activity Feed - https://github.com/caseyscarborough/github-activity */
+    // GitHubActivity.feed({ username: "jackdavidweber", selector: "#ghfeed" });
+
+    GitHubActivity.feed({
+        username: "ghfeed",
+        // repository: "your-repo", // optional
+        selector: "#ghfeed",
+        limit: 20 // optional
+    });
+
 
 });
