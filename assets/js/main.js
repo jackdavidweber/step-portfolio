@@ -61,16 +61,5 @@ jQuery(document).ready(function($) {
         
         }
     );
-    
-    // /* Github Activity Feed - https://github.com/caseyscarborough/github-activity */
-    // GitHubActivity.feed({ username: "jackdavidweber", selector: "#ghfeed" });
-
-    // GitHubActivity.feed({
-    //     username: "jackdavidweber",
-    //     // repository: "your-repo", // optional
-    //     selector: "#ghfeed",
-    //     limit: 20 // optional
-    // });
-
 
 });
